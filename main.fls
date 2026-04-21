@@ -21,6 +21,11 @@ INPUT ./main.aux
 INPUT ./main.aux
 INPUT main.aux
 OUTPUT main.aux
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecrm2074.tfm
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecrm1440.tfm
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmr12.tfm
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmmi12.tfm
+INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmsy10.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmr8.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmr6.tfm
 INPUT /usr/share/texlive/texmf-dist/fonts/tfm/public/cm/cmmi12.tfm
@@ -41,3 +46,5 @@ INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr12.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmr8.pfb
 INPUT /usr/share/texlive/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy8.pfb
 INPUT /usr/share/texmf/fonts/type1/public/cm-super/sfrm1200.pfb
+INPUT /usr/share/texmf/fonts/type1/public/cm-super/sfrm1440.pfb
+INPUT /usr/share/texmf/fonts/type1/public/cm-super/sfrm2074.pfb
