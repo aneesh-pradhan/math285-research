@@ -34,7 +34,45 @@ co-requisite courses.
 2.1 Circuit Overview 
 
 We consider a series RLC circuit driven by a voltage source V(t). The quantity of interest is 
-the capacitor voltage vCt fr t>= 0.
+the capacitor voltage vCt for t>= 0.
+
+We will assume the given component values:
+
+Source voltage: 20V
+
+Resistance: 40 Ohms $ \Omega $
+
+Inductance: 100 mH
+
+Capacitance: 25 $ \mu $ F
+
+Now that we have these variables in place, let's set up the tools we will need for our diff eq.
+
+State variables
+
+The two state variables here are the voltage across the capacitor and the current through the inductor, which also represents the current across the circuit.
+
+We choose these two variables as the capcaitor's voltage and inductor's current cannot change instantaneously, which makes them suitable for representing the system's
+energy state at any instant in time. 
+
+Initial conditions
+
+Our circuit will initially have a fully charged capacitor at 20 volts, and the inductor's current will start at zero. 
+
+Before the switch is flipped, the capacitor will behave like an open circuit and the inductor behaves like a short circuit. 
+
+Governing equations
+
+Kirchhoff's Voltage Law 
+
+Deriving Kirchhoff's Voltage Law from the textbook (reference 1), we get:
+
+Ri + Ldi/dt + 1/C (integral sign) i * dt = V(t)
+
+
+References
+
+Nilsson and Riedel, Electric Circuits 12e
 
 
 \end{document}
