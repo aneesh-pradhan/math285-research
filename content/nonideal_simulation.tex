@@ -1,0 +1,118 @@
+\section{Numerical Simulation of Non-Ideal Components}
+\label{sec:nonideal}
+
+\subsection{Nonlinear Modeling and State-Space Representation}
+
+The analytic solutions derived in the previous sections rely on ideal,
+constant component values.
+In practical circuits, however, passive components can change behavior under
+high-stress transient conditions.
+To test how these material limits alter the ideal mathematical model, this
+section adds two phenomenological nonlinear effects: current-dependent
+heating in the resistor and magnetic saturation in the inductor.
+
+Joule heating causes a resistor's temperature, and therefore its effective
+resistance, to increase as current flows through it.
+We model this dynamic resistance as
+\begin{equation}
+  R(i) = R_0 + k i^2,
+  \label{eq:thermal_resistance}
+\end{equation}
+where $R_0$ is the nominal resistance and $k$ is a heating coefficient.
+Similarly, an inductor with a saturating magnetic core loses effective
+inductance at high current.
+This effect is approximated by
+\begin{equation}
+  L(i) = \frac{L_0}{1 + (i/I_{\mathrm{sat}})^2},
+  \label{eq:saturating_inductance}
+\end{equation}
+where $L_0$ is the nominal inductance and $I_{\mathrm{sat}}$ is the saturation
+current threshold.
+
+Substituting these dynamic parameters into Kirchhoff's Voltage Law gives the
+effective nonlinear model
+\begin{equation}
+  L(i)C\frac{d^2\vC}{dt^2} + R(i)C\frac{d\vC}{dt} + \vC = V(t),
+  \label{eq:nonlinear_rlc}
+\end{equation}
+with series current $i(t)=C\,d\vC/dt$.
+Because the resistive term now contains a cubic dependence on
+$d\vC/dt$ and the inductive term changes with current, the characteristic
+equation method used for constant-coefficient systems no longer applies.
+
+For numerical simulation, let $y_1=\vC$ and $y_2=d\vC/dt$.
+Then $i=C y_2$, and \eqref{eq:nonlinear_rlc} becomes the first-order
+state-space system
+\begin{align}
+  \frac{dy_1}{dt} &= y_2, \label{eq:nonideal_state_1}\\
+  \frac{dy_2}{dt} &=
+    \frac{V(t)-y_1-R(Cy_2)Cy_2}{L(Cy_2)C}.
+    \label{eq:nonideal_state_2}
+\end{align}
+The system was integrated in Python using an adaptive RK45 method with
+$R_0=50\,\Omega$, $L_0=0.1\,\mathrm{H}$, $C=10\,\mu\mathrm{F}$,
+$k=8000$, and $I_{\mathrm{sat}}=0.05\,\mathrm{A}$.
+These values are not meant to identify a specific commercial component;
+instead, they isolate how stress-dependent component behavior changes the
+same baseline RLC circuit studied analytically above.
+
+\begin{figure}[!t]
+  \centering
+  \includegraphics[width=\textwidth]{nonideal_rlc_simulation}
+  \caption{Numerical step responses of the RLC circuit under non-ideal
+           material constraints compared against the ideal baseline model
+           ($R_0=50\,\Omega$, $L_0=0.1\,\mathrm{H}$,
+           $C=10\,\mu\mathrm{F}$).}
+  \label{fig:nonideal_simulation}
+\end{figure}
+
+\subsection{Simulation Results and Physical Interpretation}
+
+The numerical simulations in Fig.~\ref{fig:nonideal_simulation} show that
+the ideal step response remains a useful baseline, but it does not capture
+all of the transient behavior produced by stressed real components.
+
+\subsubsection{Thermal Resistor Response}
+
+During the initial transient interval, the initially uncharged capacitor draws
+a large inrush current.
+In the thermal model, this current surge raises the effective resistance above
+the nominal $50\,\Omega$ value exactly when the circuit has the most stored
+transient energy.
+The resistor therefore acts like a dynamic brake: it dissipates energy more
+aggressively during the first swing, suppressing the overshoot from about
+$14.44\,\mathrm{V}$ in the ideal model to about $13.07\,\mathrm{V}$ and
+bringing the response back toward the $10\,\mathrm{V}$ steady state more
+quickly.
+
+\subsubsection{Inductor Saturation Response}
+
+When inductor saturation is introduced, the response also deviates from the
+ideal baseline, but for a different reason.
+The high initial current lowers the effective inductance in
+\eqref{eq:saturating_inductance}; since
+$\omega_0=1/\sqrt{LC}$, the instantaneous natural frequency increases while
+the inductor is saturated.
+The voltage peak therefore occurs earlier than in the ideal model, and the
+first overshoot is reduced to about $13.24\,\mathrm{V}$.
+As the transient current decays, $L(i)$ returns toward $L_0$, so the response
+gradually realigns with the ideal curve.
+
+\subsubsection{AC Input at Resonance}
+
+To demonstrate energy buildup, the step input was replaced with an AC source
+\begin{equation}
+  V(t) = \Vs \sin(\omega_0 t),
+  \label{eq:resonant_ac_input}
+\end{equation}
+driven at the ideal natural frequency $\omega_0=1000\,\mathrm{rad/s}$.
+Because the driving frequency matches the circuit's natural energy exchange
+between $L$ and $C$, the capacitor voltage grows far beyond the source
+amplitude before settling into a large oscillation.
+In this simulation, the capacitor voltage approaches nearly
+$\pm20\,\mathrm{V}$ even though the source amplitude is only $10\,\mathrm{V}$.
+
+These simulations refine the research question.
+An ideal resistor determines the broad damping regime, but real-world
+component nonlinearities make damping state-dependent: the resistor, inductor,
+and input waveform can all change the transient path taken toward stability.

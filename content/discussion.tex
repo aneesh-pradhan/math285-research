@@ -9,6 +9,8 @@ The resistor was identified as the sole energy-dissipating element, and its
 value shown to directly determine the discriminant of the characteristic
 equation~\eqref{eq:char}, thereby controlling whether the circuit is
 overdamped, critically damped, or underdamped.
+The numerical extension then showed that stress-dependent components can
+change the transient path even when the nominal values remain fixed.
 
 \subsection{Interpretation in Terms of the Research Question}
 
@@ -28,15 +30,25 @@ energy source or feedback element to replace resistive losses.
 This analytical framework directly addresses the research question: resistors
 are essential for stabilizing oscillatory behavior and enabling practical
 circuit design.
+The non-ideal simulations add an important refinement: damping is not always
+a constant design parameter during a transient.
+When current is large, resistor heating can increase dissipation and suppress
+overshoot, while inductor saturation can temporarily raise the natural
+frequency and shift the timing of voltage peaks.
+The resonant AC case also shows that even with resistance present, a matched
+driving frequency can produce capacitor voltages much larger than the source
+amplitude.
 
 \subsection{Limitations and Future Work}
 
 The lumped-element and linearity assumptions restrict the model's validity to
 low frequencies and small signals.
 Future work should incorporate:
-(i) a nonlinear resistance model $R(T,i)$ to capture self-heating;
-(ii) distributed-element analysis for RF applications above \qty{1}{\mega\hertz};
-(iii) experimental validation using an oscilloscope to compare measured
+(i) calibration of $k$ and $I_{\mathrm{sat}}$ against measured component data;
+(ii) a temperature state equation for resistor self-heating rather than the
+instantaneous approximation $R(i)=R_0+ki^2$;
+(iii) distributed-element analysis for RF applications above $1\,\mathrm{MHz}$;
+(iv) experimental validation using an oscilloscope to compare measured
 $\vC(t)$ waveforms against the analytic solutions derived here; and
-(iv) extension to parallel RLC and more complex multi-mesh circuits modeled
+(v) extension to parallel RLC and more complex multi-mesh circuits modeled
 by systems of ODEs.

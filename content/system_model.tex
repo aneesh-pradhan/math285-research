@@ -20,21 +20,21 @@ Table~\ref{tab:nominal-values}.
     \toprule
     Quantity & Symbol & Nominal value \\
     \midrule
-    Source amplitude & $\Vs$ & \qty{10}{\volt} \\
-    Resistance cases & $R$ & \qty{50}{\ohm}, \qty{200}{\ohm}, \qty{500}{\ohm} \\
-    Inductance & $L$ & \qty{100}{\milli\henry} = \qty{0.1}{\henry} \\
-    Capacitance & $C$ & \qty{10}{\micro\farad} = \qty{10e-6}{\farad} \\
+    Source amplitude & $\Vs$ & $10\,\mathrm{V}$ \\
+    Resistance cases & $R$ & $50\,\Omega$, $200\,\Omega$, $500\,\Omega$ \\
+    Inductance & $L$ & $100\,\mathrm{mH} = 0.1\,\mathrm{H}$ \\
+    Capacitance & $C$ & $10\,\mu\mathrm{F} = 10\times 10^{-6}\,\mathrm{F}$ \\
     \bottomrule
   \end{tabular}
 \end{table}
 
 These values were chosen because they produce simple, transparent damping
 parameters while remaining realistic for a bench-top laboratory circuit:
-$LC = \qty{1e-6}{\second\squared}$, so
-$\omega_0 = 1/\sqrt{LC} = \qty{1000}{\radian\per\second}$, and
-$\Rcrit = 2\sqrt{L/C} = \qty{200}{\ohm}$.
-Thus $R = \qty{50}{\ohm}$, $R = \qty{200}{\ohm}$, and
-$R = \qty{500}{\ohm}$ provide clear underdamped, critically damped, and
+$LC = 1\times 10^{-6}\,\mathrm{s}^2$, so
+$\omega_0 = 1/\sqrt{LC} = 1000\,\mathrm{rad/s}$, and
+$\Rcrit = 2\sqrt{L/C} = 200\,\Omega$.
+Thus $R = 50\,\Omega$, $R = 200\,\Omega$, and
+$R = 500\,\Omega$ provide clear underdamped, critically damped, and
 overdamped examples, respectively.
 
 \subsection{State Variables}
@@ -51,8 +51,8 @@ instant.
 
 Before the switch is closed at $t = 0$:
 \begin{itemize}
-  \item The capacitor is initially uncharged: $\vC(0) = \qty{0}{\volt}$.
-  \item No current flows: $i(0) = \qty{0}{\ampere}$.
+  \item The capacitor is initially uncharged: $\vC(0) = 0\,\mathrm{V}$.
+  \item No current flows: $i(0) = 0\,\mathrm{A}$.
 \end{itemize}
 Prior to switching, the capacitor behaves as an open circuit (blocking DC
 current) and the ideal inductor behaves as a short circuit (zero DC voltage

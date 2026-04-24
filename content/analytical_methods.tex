@@ -23,7 +23,7 @@ With initial conditions applied, the initial value problems (IVPs) are:
 \noindent\textbf{RLC circuit (second-order):}
 \begin{equation}
   LC\frac{d^2\vC}{dt^2} + RC\frac{d\vC}{dt} + \vC = \Vs,
-  \qquad \vC(0) = \qty{0}{\volt},\quad \dot{\vC}(0) = 0.
+  \qquad \vC(0) = 0\,\mathrm{V},\quad \dot{\vC}(0) = 0.
   \label{eq:rlc_ivp}
 \end{equation}
 
@@ -34,9 +34,9 @@ the right-hand side represents the forcing from the voltage source.
 \subsection{Independent and Dependent Variables}
 
 \begin{itemize}
-  \item \textbf{Independent variable:} time $t$ in \si{\second}.
-  \item \textbf{Dependent variables:} $\vC(t)$ in \si{\volt} (capacitor
-        voltage) and $i(t)$ in \si{\ampere} (series current).
+  \item \textbf{Independent variable:} time $t$ in $\mathrm{s}$.
+  \item \textbf{Dependent variables:} $\vC(t)$ in $\mathrm{V}$ (capacitor
+        voltage) and $i(t)$ in $\mathrm{A}$ (series current).
 \end{itemize}
 
 \subsection{Parameters}
@@ -45,11 +45,11 @@ the right-hand side represents the forcing from the voltage source.
   \item $R$: resistance; dissipates electrical energy as heat. Appears in the
         first-order damping term $R/L$ and the second-order damping
         coefficient $\alpha = R/(2L)$.
-  \item $L = \qty{0.1}{\henry}$: inductance; stores energy in a magnetic field.
+  \item $L = 0.1\,\mathrm{H}$: inductance; stores energy in a magnetic field.
         Governs how quickly current can change.
-  \item $C = \qty{10e-6}{\farad}$: capacitance; stores energy in an electric
-        field. Governs how quickly voltage can change.
-  \item $\Vs = \qty{10}{\volt}$: step-input amplitude. Represents a DC voltage
+  \item $C = 10\times 10^{-6}\,\mathrm{F}$: capacitance; stores energy in an
+        electric field. Governs how quickly voltage can change.
+  \item $\Vs = 10\,\mathrm{V}$: step-input amplitude. Represents a DC voltage
         switched on at $t = 0$.
 \end{itemize}
 
@@ -73,7 +73,8 @@ capacitance in inductors violate the lumped-element assumption, requiring
 distributed-element or transmission-line models.
 The ideal step-input assumption ignores source impedance and switching
 transients present in physical systems.
-These effects are left for future work.
+Section~\ref{sec:nonideal} relaxes two of these assumptions by simulating
+current-dependent resistor heating and inductor saturation.
 
 \subsection{Analytic Solutions}
 
