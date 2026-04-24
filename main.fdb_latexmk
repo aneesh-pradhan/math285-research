@@ -1,7 +1,7 @@
 # Fdb version 4
-["pdflatex"] 1776783735.69074 "/home/aneesh/math285-research/main.tex" "main.pdf" "main" 1776783735.94607 2
+["pdflatex"] 1776793165.01723 "/home/aneesh/math285-research/main.tex" "main.pdf" "main" 1776793165.26734 2
   "/etc/texmf/web2c/texmf.cnf" 1776716675.43882 475 c0e671620eb5563b2130f56340a5fde8 ""
-  "/home/aneesh/math285-research/main.tex" 1776783735.2227 2911 48a78c397b5eb83dba31d7d0bbbedac7 ""
+  "/home/aneesh/math285-research/main.tex" 1776793164.26808 3056 17afd9c053e44301ed72ddea995d6430 ""
   "/usr/share/texlive/texmf-dist/fonts/map/fontname/texfonts.map" 1577235249 3524 cb3e574dea2d1052e39280babc910dc8 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecrm1200.tfm" 1136768653 3584 f80ddd985bd00e29e9a6047ebd9d4781 ""
   "/usr/share/texlive/texmf-dist/fonts/tfm/jknappen/ec/ecrm1440.tfm" 1136768653 3584 3169d30142b88a27d4ab0e3468e963a2 ""
@@ -34,8 +34,8 @@
   "/usr/share/texmf/web2c/texmf.cnf" 1769369718 41603 27f93b3067076450172040dcd57ca8b3 ""
   "/var/lib/texmf/fonts/map/pdftex/updmap/pdftex.map" 1776717377 5541477 3118940318599480888143717dd32d64 ""
   "/var/lib/texmf/web2c/pdftex/pdflatex.fmt" 1776717455 3637383 957cdddc6333688a9f36ecf4c4bcec72 ""
-  "main.aux" 1776783735.90168 32 044b7f8fc9779af7531264e0c5c84b6d "pdflatex"
-  "main.tex" 1776783735.2227 2911 48a78c397b5eb83dba31d7d0bbbedac7 ""
+  "main.aux" 1776793165.21981 32 044b7f8fc9779af7531264e0c5c84b6d "pdflatex"
+  "main.tex" 1776793164.26808 3056 17afd9c053e44301ed72ddea995d6430 ""
   (generated)
   "main.aux"
   "main.log"
