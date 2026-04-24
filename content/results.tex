@@ -14,7 +14,8 @@ If $\vC<\Vs$, then $\dot{\vC}>0$; if $\vC>\Vs$, then $\dot{\vC}<0$.
 Thus the phase line points toward $\vC^\ast$ from both sides, so the
 equilibrium is asymptotically stable.
 
-Using $R=100\,\Omega$ and $C=10\,\mu\mathrm{F}$ gives
+Using $R=100\,\Omega$ and $C=10\,\mu\mathrm{F}$ (a separate RC sub-circuit
+example, independent of the RLC values in Table~\ref{tab:nominal-values}) gives
 $\tau_{RC}=RC=1\,\mathrm{ms}$.
 For three initial capacitor voltages,
 \begin{align}
@@ -104,7 +105,7 @@ Equivalently,
 \end{equation}
 For the underdamped case $R=50\,\Omega$, the eigenvalues are
 $-250 \pm j\,968.25$, so the trajectory is a stable spiral approaching
-$(10,0)$. If the shifted coordinate $u=\vC-\Vs$ were used instead, the same
+$(10,0)$~\cite{nilsson2019}. If the shifted coordinate $u=\vC-\Vs$ were used instead, the same
 spiral would approach $(u,\dot{u})=(0,0)$.
 
 \begin{figure}[htbp]
@@ -155,7 +156,8 @@ spiral would approach $(u,\dot{u})=(0,0)$.
     \end{axis}
   \end{tikzpicture}
   \caption{Phase trajectory of the second-order system ($\dot{\vC}$ vs.\ $\vC$)
-           for the underdamped case with $R = 50\,\Omega$.}
+           for the underdamped case with $R = 50\,\Omega$, converging to the
+           equilibrium $(\vC,\,\dot{\vC}) = (10\,\text{V},\;0\,\text{V/s})$.}
   \label{fig:phase}
 \end{figure}
 

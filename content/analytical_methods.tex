@@ -120,7 +120,7 @@ The discriminant $\Delta = \alpha^2 - \omega_0^2$ determines damping behavior:
         two distinct real negative roots.
         The circuit returns to equilibrium without oscillating, but slowly.
         This occurs in high-resistance configurations such as lossy filters.
-  \item \textbf{Critically damped} ($\Delta = 0$, i.e.\ $R = 2\sqrt{L/C}$):
+  \item \textbf{Critically damped} ($\Delta = 0$, i.e.\ $R = R_\mathrm{crit} = 2\sqrt{L/C}$):
         one repeated real root $r = -\alpha$.
         Fastest non-oscillatory return to equilibrium; used in precision
         instruments that must settle quickly.
@@ -171,14 +171,17 @@ For example, in the underdamped case one may write
 where $u_1(t)$ and $u_2(t)$ are chosen so that the forced equation and its
 auxiliary constraint are both satisfied.
 This converts a nonconstant forcing term into first-order equations for
-$u_1$ and $u_2$.
+$u_1$ and $u_2$~\cite{nilsson2019}.
 Alternatively,
 (ii)~\emph{Laplace transforms}, which convert the ODE to an algebraic equation
 $\mathcal{L}\{\vC\}(s) = \mathcal{L}\{V(t)\}(s) \cdot H(s)$, where
 $H(s) = 1/(LCs^2 + RCs + 1)$ is the circuit transfer function,
-followed by a partial-fraction expansion and inverse transform.
+followed by a partial-fraction expansion and inverse transform~\cite{hayt2018}.
 
 \paragraph{Applying initial conditions (underdamped case)}
+Here $V_0$ denotes the general initial capacitor voltage; the main case
+study in Table~\ref{tab:nominal-values} uses $V_0 = 0$, consistent with the
+zero-charge initial condition in~\eqref{eq:rlc_ivp}.
 The complete solution is $\vC(t) = v_{C,h}(t) + \Vs$.
 Applying $\vC(0) = V_0$ and $\dot{\vC}(0) = 0$:
 \begin{align}

@@ -19,8 +19,8 @@ We model this dynamic resistance as
   \label{eq:thermal_resistance}
 \end{equation}
 where $R_0$ is the nominal resistance and $k$ is a heating coefficient.
-Since $ki^2$ must have units of ohms, $k$ has units of
-$\Omega/\mathrm{A}^2$.
+Dimensionally, $[k][i^2] = \Omega$ requires $[k] = \Omega/\mathrm{A}^2$;
+that is, $k$ carries units of $\Omega/\mathrm{A}^2$.
 Similarly, an inductor with a saturating magnetic core loses effective
 inductance at high current.
 This effect is approximated by
@@ -29,7 +29,7 @@ This effect is approximated by
   \label{eq:saturating_inductance}
 \end{equation}
 where $L_0$ is the nominal inductance and $I_{\mathrm{sat}}$ is the saturation
-current threshold.
+current threshold~\cite{mohan2002}.
 
 Substituting these dynamic parameters into Kirchhoff's Voltage Law gives the
 effective nonlinear model
@@ -55,7 +55,7 @@ state-space system
     \frac{V(t)-y_1-R(Cy_2)Cy_2}{L(Cy_2)C}.
     \label{eq:nonideal_state_2}
 \end{align}
-The system was integrated in Python using an adaptive RK45 method with
+The system was integrated in Python using an adaptive RK45 method~\cite{dormand1980} with
 $R_0=50\,\Omega$, $L_0=0.1\,\mathrm{H}$, $C=10\,\mu\mathrm{F}$,
 $k=8000\,\Omega/\mathrm{A}^2$, and
 $I_{\mathrm{sat}}=0.05\,\mathrm{A}$.
@@ -78,6 +78,8 @@ same baseline RLC circuit studied analytically above.
 The numerical simulations in Fig.~\ref{fig:nonideal_simulation} show that
 the ideal step response remains a useful baseline, but it does not capture
 all of the transient behavior produced by stressed real components.
+Three non-ideal scenarios are examined: thermal resistance, inductor
+saturation, and resonant AC forcing.
 
 \subsubsection{Thermal Resistor Response}
 

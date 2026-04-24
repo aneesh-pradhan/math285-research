@@ -1,0 +1,8 @@
+{
+  "permissions": {
+    "allow": [
+      "Edit(content/**)",
+      "Edit(bibliography/**)"
+    ]
+  }
+}

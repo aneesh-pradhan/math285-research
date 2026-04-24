@@ -11,6 +11,20 @@ import matplotlib
 
 matplotlib.use("Agg")
 import matplotlib.pyplot as plt
+from matplotlib.ticker import ScalarFormatter
+
+plt.rcParams.update({
+    "text.usetex": True,
+    "font.family": "serif",
+    "font.serif": ["Times"],
+    "axes.formatter.use_mathtext": True,
+    "axes.titlesize": 9,
+    "axes.labelsize": 8,
+    "xtick.labelsize": 7,
+    "ytick.labelsize": 7,
+    "legend.fontsize": 7,
+    "figure.titlesize": 11,
+})
 
 # --- 1. Baseline Circuit Parameters ---
 Vs_amp = 10.0      # Source voltage amplitude (V)
@@ -65,8 +79,8 @@ t_eval = np.linspace(t_span[0], t_span[1], 2000) # High resolution for smooth cu
 # modify the same underlying circuit dynamics.
 scenarios = {
     'ideal': 'Ideal Step Response (Baseline)',
-    'thermal': f'Thermal Resistor (k={k_thermal:.0f} Ohm/A^2)',
-    'saturation': f'Inductor Saturation (Isat={I_sat} A)',
+    'thermal': rf'Thermal Resistor ($k={k_thermal:.0f}\,\Omega/\mathrm{{A}}^2$)',
+    'saturation': rf'Inductor Saturation ($I_{{\mathrm{{sat}}}}={I_sat}\,\mathrm{{A}}$)',
     'ac_input': 'AC Input at Resonance'
 }
 
@@ -79,26 +93,44 @@ for key in scenarios.keys():
     results[key] = sol.y[0] # Store the capacitor voltage
 
 # --- 5. Plotting the 2x2 Grid ---
-fig, axs = plt.subplots(2, 2, figsize=(14, 8))
-fig.suptitle('Advanced RLC Circuit Modeling: Non-Linear and AC Dynamics', fontsize=16)
+fig, axs = plt.subplots(2, 2, figsize=(7.2, 5.0))
+fig.suptitle('Advanced RLC Circuit Modeling: Nonlinear and AC Dynamics')
 
 # Helper function to plot each subplot
 def format_subplot(ax, time, voltage, title, is_ac=False):
-    ax.plot(time, voltage, color='red' if title != 'Ideal Step Response (Baseline)' else 'blue', linewidth=1.5)
+    ax.plot(
+        time,
+        voltage,
+        color='red' if title != 'Ideal Step Response (Baseline)' else 'blue',
+        linewidth=1.0,
+    )
     
     # Plot baseline ideal for comparison on the non-linear step plots
     if title not in ['Ideal Step Response (Baseline)', 'AC Input at Resonance']:
-        ax.plot(time, results['ideal'], color='blue', linestyle='--', alpha=0.5, label='Ideal Baseline')
-        ax.legend()
+        ax.plot(
+            time,
+            results['ideal'],
+            color='blue',
+            linestyle='--',
+            linewidth=0.9,
+            alpha=0.55,
+            label='Ideal baseline',
+        )
+        ax.legend(frameon=True, framealpha=0.9, borderpad=0.3, handlelength=1.8)
 
     if not is_ac:
-        ax.axhline(Vs_amp, color='black', linewidth=0.8, linestyle=':')
+        ax.axhline(Vs_amp, color='black', linewidth=0.6, linestyle=':')
         
     ax.set_title(title)
     ax.set_ylabel('Capacitor Voltage (V)')
     ax.set_xlabel('Time (s)')
-    ax.grid(True)
-    ax.ticklabel_format(style='sci', axis='x', scilimits=(0,0))
+    ax.grid(True, color='0.75', linewidth=0.45)
+    ax.ticklabel_format(style='sci', axis='x', scilimits=(0, 0))
+    formatter = ScalarFormatter(useMathText=True)
+    formatter.set_powerlimits((0, 0))
+    ax.xaxis.set_major_formatter(formatter)
+    for spine in ax.spines.values():
+        spine.set_linewidth(0.6)
 
 # Plot Ideal
 format_subplot(axs[0, 0], t_eval, results['ideal'], scenarios['ideal'])
@@ -112,7 +144,7 @@ format_subplot(axs[1, 0], t_eval, results['saturation'], scenarios['saturation']
 # Plot AC Input
 format_subplot(axs[1, 1], t_eval, results['ac_input'], scenarios['ac_input'], is_ac=True)
 
-plt.tight_layout(rect=[0, 0.03, 1, 0.95]) # Adjust layout so title fits
+plt.tight_layout(rect=[0, 0.02, 1, 0.94]) # Adjust layout so title fits
 
 output_dir = Path("figures")
 output_dir.mkdir(exist_ok=True)

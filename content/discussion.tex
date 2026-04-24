@@ -19,11 +19,11 @@ Without resistance ($R = 0$), the characteristic roots are purely imaginary
 LC tank circuit.
 Any nonzero $R$ introduces the decay envelope $e^{-\alpha t}$ that eventually
 damps oscillations to zero.
-In engineering applications: bandpass filters rely on controlled underdamping
+In engineering applications: bandpass filters rely on controlled underdamping~\cite{williams2006}
 to achieve frequency selectivity when the output is taken across the resistor,
 while the capacitor-voltage response studied here behaves like a low-pass
 response with possible resonant overshoot. Overdamped circuits ensure no
-ringing in power supplies and ADC front-ends; critically damped designs appear
+oscillatory transients (ringing) in power supplies and ADC front-ends~\cite{williams2006}; critically damped designs appear
 in servo systems where settling speed is paramount. A passive RLC circuit can
 store and exchange energy, but a sustained oscillator also requires an active
 energy source or feedback element to replace resistive losses.
