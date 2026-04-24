@@ -1,0 +1,92 @@
+\section{System Model and Governing Principles}
+\label{sec:circuit}
+
+\subsection{Circuit Overview}
+
+We consider a series RLC circuit driven by a step voltage source $V(t)$.
+At $t = 0$, a DC source of amplitude $\Vs$ is connected to an initially
+uncharged capacitor, so $V(t) = \Vs$ for the post-switching interval
+$t \geq 0$.
+The quantity of primary interest is the capacitor voltage $\vC(t)$ for
+$t \geq 0$.
+The component values used for the main RLC case study are summarized in
+Table~\ref{tab:nominal-values}.
+
+\begin{table}[!t]
+  \caption{Nominal Component Values}
+  \label{tab:nominal-values}
+  \centering
+  \begin{tabular}{@{}lll@{}}
+    \toprule
+    Quantity & Symbol & Nominal value \\
+    \midrule
+    Source amplitude & $\Vs$ & \qty{10}{\volt} \\
+    Resistance cases & $R$ & \qty{50}{\ohm}, \qty{200}{\ohm}, \qty{500}{\ohm} \\
+    Inductance & $L$ & \qty{100}{\milli\henry} = \qty{0.1}{\henry} \\
+    Capacitance & $C$ & \qty{10}{\micro\farad} = \qty{10e-6}{\farad} \\
+    \bottomrule
+  \end{tabular}
+\end{table}
+
+These values were chosen because they produce simple, transparent damping
+parameters while remaining realistic for a bench-top laboratory circuit:
+$LC = \qty{1e-6}{\second\squared}$, so
+$\omega_0 = 1/\sqrt{LC} = \qty{1000}{\radian\per\second}$, and
+$\Rcrit = 2\sqrt{L/C} = \qty{200}{\ohm}$.
+Thus $R = \qty{50}{\ohm}$, $R = \qty{200}{\ohm}$, and
+$R = \qty{500}{\ohm}$ provide clear underdamped, critically damped, and
+overdamped examples, respectively.
+
+\subsection{State Variables}
+
+The two state variables are the capacitor voltage $\vC(t)$ and the inductor
+current $i(t)$, which also equals the series current through every element.
+These quantities are chosen because neither can change instantaneously:
+the capacitor voltage is proportional to stored charge ($\vC = q/C$), and the
+inductor current is proportional to stored magnetic flux ($\Psi = Li$).
+Consequently, they fully characterize the energy state of the circuit at any
+instant.
+
+\subsection{Initial Conditions}
+
+Before the switch is closed at $t = 0$:
+\begin{itemize}
+  \item The capacitor is initially uncharged: $\vC(0) = \qty{0}{\volt}$.
+  \item No current flows: $i(0) = \qty{0}{\ampere}$.
+\end{itemize}
+Prior to switching, the capacitor behaves as an open circuit (blocking DC
+current) and the ideal inductor behaves as a short circuit (zero DC voltage
+drop).
+
+\subsection{Governing Equations}
+
+\subsubsection{Kirchhoff's Voltage Law}
+
+Applying Kirchhoff's Voltage Law (KVL) around the series loop~\cite{nilsson2019}:
+\begin{equation}
+  Ri + L\frac{di}{dt} + \vC = V(t).
+  \label{eq:kvl}
+\end{equation}
+
+\subsubsection{Second-Order ODE for the RLC Circuit}
+
+Using the capacitor voltage relationship $i(t) = C\,d\vC/dt$ and
+substituting into \eqref{eq:kvl} yields the governing second-order ODE:
+\begin{equation}
+  LC\frac{d^2\vC}{dt^2} + RC\frac{d\vC}{dt} + \vC = V(t).
+  \label{eq:rlc2nd}
+\end{equation}
+
+\subsubsection{First-Order ODEs for Reduced Circuits}
+
+For an RC circuit (inductor replaced by an ideal wire, $L \to 0$):
+\begin{equation}
+  \frac{d\vC}{dt} + \frac{1}{RC}\,\vC = \frac{\Vs}{RC}.
+  \label{eq:rc1st}
+\end{equation}
+
+For an RL circuit (capacitor replaced by an ideal wire):
+\begin{equation}
+  \frac{di}{dt} + \frac{R}{L}\,i = \frac{\Vs}{L}.
+  \label{eq:rl1st}
+\end{equation}

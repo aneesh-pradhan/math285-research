@@ -1,0 +1,178 @@
+\section{Analytical Methods}
+\label{sec:methods}
+
+\subsection{Equations, Conditions, and Connection to the Application}
+
+The three ODEs derived above--\eqref{eq:rc1st}, \eqref{eq:rl1st},
+and~\eqref{eq:rlc2nd}--together model the spectrum from simple to complex
+circuit behavior.
+With initial conditions applied, the initial value problems (IVPs) are:
+
+\noindent\textbf{RC circuit (first-order):}
+\begin{equation}
+  \frac{d\vC}{dt} + \frac{1}{RC}\,\vC = \frac{\Vs}{RC}, \qquad \vC(0) = V_0.
+  \label{eq:rc_ivp}
+\end{equation}
+
+\noindent\textbf{RL circuit (first-order):}
+\begin{equation}
+  \frac{di}{dt} + \frac{R}{L}\,i = \frac{\Vs}{L}, \qquad i(0) = 0.
+  \label{eq:rl_ivp}
+\end{equation}
+
+\noindent\textbf{RLC circuit (second-order):}
+\begin{equation}
+  LC\frac{d^2\vC}{dt^2} + RC\frac{d\vC}{dt} + \vC = \Vs,
+  \qquad \vC(0) = \qty{0}{\volt},\quad \dot{\vC}(0) = 0.
+  \label{eq:rlc_ivp}
+\end{equation}
+
+Each equation models a physical balance: the left-hand terms represent
+energy dissipation (via $R$) and energy storage (via $L$ and $C$), while
+the right-hand side represents the forcing from the voltage source.
+
+\subsection{Independent and Dependent Variables}
+
+\begin{itemize}
+  \item \textbf{Independent variable:} time $t$ in \si{\second}.
+  \item \textbf{Dependent variables:} $\vC(t)$ in \si{\volt} (capacitor
+        voltage) and $i(t)$ in \si{\ampere} (series current).
+\end{itemize}
+
+\subsection{Parameters}
+
+\begin{itemize}
+  \item $R$: resistance; dissipates electrical energy as heat. Appears in the
+        first-order damping term $R/L$ and the second-order damping
+        coefficient $\alpha = R/(2L)$.
+  \item $L = \qty{0.1}{\henry}$: inductance; stores energy in a magnetic field.
+        Governs how quickly current can change.
+  \item $C = \qty{10e-6}{\farad}$: capacitance; stores energy in an electric
+        field. Governs how quickly voltage can change.
+  \item $\Vs = \qty{10}{\volt}$: step-input amplitude. Represents a DC voltage
+        switched on at $t = 0$.
+\end{itemize}
+
+\subsection{Assumptions and Limitations}
+
+\paragraph{Assumptions.}
+We adopt the standard \emph{lumped-element model}: all resistance is
+concentrated in $R$, all inductance in $L$, and all capacitance in $C$,
+with no parasitic coupling between components.
+Component values are assumed to be constant with respect to temperature,
+frequency, and signal amplitude (i.e., linear, time-invariant behavior).
+Wires and switch contacts are treated as ideal (zero resistance, zero
+inductance).
+
+\paragraph{Limitations.}
+Real resistors exhibit temperature-dependent resistance governed by
+$R(T) = R_0[1 + \alpha_R(T - T_0)]$, introducing nonlinear behavior
+under large current loads.
+At high frequencies, parasitic inductance in capacitors and parasitic
+capacitance in inductors violate the lumped-element assumption, requiring
+distributed-element or transmission-line models.
+The ideal step-input assumption ignores source impedance and switching
+transients present in physical systems.
+These effects are left for future work.
+
+\subsection{Analytic Solutions}
+
+\subsubsection{First-Order RC Circuit}
+
+Equation~\eqref{eq:rc_ivp} is a linear first-order ODE with constant
+coefficients.
+Using the integrating factor $\mu(t) = e^{t/(RC)}$, the general solution is:
+\begin{equation}
+  \vC(t) = \Vs + (V_0 - \Vs)\,e^{-t/(RC)}.
+  \label{eq:rc_sol}
+\end{equation}
+The time constant $\tau_{RC} = RC$ determines how quickly $\vC$ relaxes to
+the steady-state value $\Vs$.
+
+\subsubsection{First-Order RL Circuit}
+
+Similarly, \eqref{eq:rl_ivp} yields:
+\begin{equation}
+  i(t) = \frac{\Vs}{R}\!\left(1 - e^{-(R/L)t}\right).
+  \label{eq:rl_sol}
+\end{equation}
+The time constant is $\tau_{RL} = L/R$.
+
+\subsubsection{Second-Order RLC Circuit: Characteristic Equation and Damping}
+
+Seeking homogeneous solutions of the form $e^{rt}$ in \eqref{eq:rlc_ivp}
+leads to the characteristic equation:
+\begin{equation}
+  LCr^2 + RCr + 1 = 0.
+  \label{eq:char}
+\end{equation}
+Dividing by $LC$ and introducing the standard parameters
+\begin{equation}
+  \alpha = \frac{R}{2L}, \qquad \omega_0 = \frac{1}{\sqrt{LC}},
+  \label{eq:params}
+\end{equation}
+the roots become $r = -\alpha \pm \sqrt{\alpha^2 - \omega_0^2}$.
+The discriminant $\Delta = \alpha^2 - \omega_0^2$ determines damping behavior:
+
+\begin{itemize}
+  \item \textbf{Overdamped} ($\Delta > 0$, i.e.\ $R > 2\sqrt{L/C}$):
+        two distinct real negative roots.
+        The circuit returns to equilibrium without oscillating, but slowly.
+        This occurs in high-resistance configurations such as lossy filters.
+  \item \textbf{Critically damped} ($\Delta = 0$, i.e.\ $R = 2\sqrt{L/C}$):
+        one repeated real root $r = -\alpha$.
+        Fastest non-oscillatory return to equilibrium; used in precision
+        instruments that must settle quickly.
+  \item \textbf{Underdamped} ($\Delta < 0$, i.e.\ $R < 2\sqrt{L/C}$):
+        two complex conjugate roots $r = -\alpha \pm j\omega_d$, where
+        $\omega_d = \sqrt{\omega_0^2 - \alpha^2}$ is the damped natural
+        frequency.
+        The circuit oscillates with exponentially decaying amplitude; typical
+        in resonant and tuned circuits.
+\end{itemize}
+
+\subsubsection{Second-Order RLC Circuit: General Analytic Solution}
+
+\paragraph{Homogeneous solutions.}
+For each damping case, the general homogeneous solution is:
+
+\noindent\textit{Overdamped} ($r_1, r_2$ real, distinct):
+\begin{equation}
+  v_{C,h}(t) = A_1 e^{r_1 t} + A_2 e^{r_2 t}.
+  \label{eq:over}
+\end{equation}
+
+\noindent\textit{Critically damped} ($r = -\alpha$ repeated):
+\begin{equation}
+  v_{C,h}(t) = (A_1 + A_2 t)\,e^{-\alpha t}.
+  \label{eq:crit}
+\end{equation}
+
+\noindent\textit{Underdamped} (complex roots):
+\begin{equation}
+  v_{C,h}(t) = e^{-\alpha t}\!\left(A_1\cos\omega_d t + A_2\sin\omega_d t\right).
+  \label{eq:under}
+\end{equation}
+
+\paragraph{Non-homogeneous solution.}
+For a constant forcing $V(t) = \Vs$, the particular solution is simply
+$v_{C,p} = \Vs$.
+For time-varying inputs, two systematic methods apply:
+(i)~\emph{Variation of parameters}, which replaces the constants $A_1, A_2$
+with functions $u_1(t), u_2(t)$ determined by a two-equation system derived
+from the ODE; or
+(ii)~\emph{Laplace transforms}, which convert the ODE to an algebraic equation
+$\mathcal{L}\{\vC\}(s) = \mathcal{L}\{V(t)\}(s) \cdot H(s)$, where
+$H(s) = 1/(LCs^2 + RCs + 1)$ is the circuit transfer function,
+followed by a partial-fraction expansion and inverse transform.
+
+\paragraph{Applying initial conditions (underdamped case).}
+The complete solution is $\vC(t) = v_{C,h}(t) + \Vs$.
+Applying $\vC(0) = V_0$ and $\dot{\vC}(0) = 0$:
+\begin{align}
+  \vC(0) &= A_1 + \Vs = V_0 \;\implies\; A_1 = V_0 - \Vs, \label{eq:ic1}\\
+  \dot{\vC}(0) &= -\alpha A_1 + \omega_d A_2 = 0 \;\implies\;
+                 A_2 = \frac{\alpha(V_0 - \Vs)}{\omega_d}. \label{eq:ic2}
+\end{align}
+Substituting \eqref{eq:ic1}--\eqref{eq:ic2} into \eqref{eq:under} and
+adding $\Vs$ gives the complete analytic solution for the underdamped case.

@@ -1,0 +1,40 @@
+\section{Introduction}
+\label{sec:intro}
+
+Electric circuits are fundamental to modern technology, powering everything
+from household appliances to advanced communication systems~\cite{nilsson2019}.
+Among the most studied configurations is the series RLC circuit, which
+connects a resistor, an inductor, and a capacitor in series with a voltage
+source.
+This topology appears throughout electrical engineering in the design of
+bandpass filters, resonant oscillators, and impedance-matching networks.
+
+The dynamic behavior of such circuits is naturally captured by
+\emph{ordinary differential equations}~(ODEs).
+Simpler RC and RL sub-circuits obey \emph{first-order} ODEs, while the
+complete RLC system requires a \emph{second-order} ODE to describe the
+interplay between energy stored in the inductor's magnetic field and the
+capacitor's electric field.
+Understanding the transition from first- to second-order models clarifies
+why the resistor plays an indispensable role: it is the only purely
+dissipative element in the circuit.
+
+Our scientific question is:
+\begin{quote}
+  \itshape
+  How do resistors influence the damping and stability of series RLC circuits
+  as described by ODEs, and what are the practical implications in engineering
+  applications?
+\end{quote}
+
+The remainder of this paper is structured as follows.
+Section~\ref{sec:circuit} introduces the circuit configuration and the
+governing physical principles.
+Section~\ref{sec:methods} details the derivation of the governing equations,
+identification of variables and parameters, and the analytic solutions for
+each circuit type.
+Section~\ref{sec:results} presents results from varying circuit parameters
+and initial conditions.
+Section~\ref{sec:discussion} interprets the findings in the context of our
+research question, discusses limitations, and proposes future work.
+Section~\ref{sec:conclusion} concludes the paper.

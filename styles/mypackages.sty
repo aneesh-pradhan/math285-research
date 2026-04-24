@@ -1,0 +1,53 @@
+\NeedsTeXFormat{LaTeX2e}
+\ProvidesPackage{styles/mypackages}
+
+% Core packages.
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{graphicx}
+\usepackage{pgfplots}
+\usepackage{booktabs}
+\usepackage{cite}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{microtype}
+\usepackage{siunitx}
+
+\hypersetup{
+  colorlinks=false,
+  pdfauthor={Aneesh Pradhan},
+  pdftitle={Exploring the Use of Differential Equations in Electric Circuits},
+  pdfsubject={MATH 285 Honors Project Report}
+}
+
+\sisetup{
+  detect-all,
+  per-mode=symbol,
+  exponent-product=\cdot
+}
+
+\graphicspath{{figures/}}
+\pgfplotsset{compat=1.18}
+
+% Notation helpers used throughout the report.
+\newcommand{\vC}{v_C}
+\newcommand{\Vs}{V_s}
+\newcommand{\Rcrit}{R_{\mathrm{crit}}}
+
+\newcommand{\draftfigure}[1]{%
+  \fbox{%
+    \begin{minipage}[c][4cm][c]{0.9\columnwidth}
+      \centering\itshape #1
+    \end{minipage}%
+  }%
+}
+
+\title{Exploring the Use of Differential Equations in Electric Circuits}
+
+\author{Aneesh~Pradhan%
+\thanks{A. Pradhan is with the Department of Mathematics, California State
+University, East Bay, Hayward, CA, USA.}%
+\thanks{Prepared for MATH 285 under the supervision of Prof. Matea Santiago.}}
+
+\AtBeginDocument{\bibliographystyle{IEEEtran}}
