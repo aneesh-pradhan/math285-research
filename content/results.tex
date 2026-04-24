@@ -39,6 +39,24 @@ only the time constant:
 Larger resistance produces slower charging, which is the first-order analog
 of the damping effect studied in the full RLC circuit.
 
+\subsection{First-Order RL Response}
+\label{ssec:rl_results}
+
+For the RL sub-circuit, the analytic solution~\eqref{eq:rl_sol} can similarly
+be evaluated for three values of resistance with $L = 0.1\,\mathrm{H}$ and
+$\Vs = 10\,\mathrm{V}$:
+\begin{align}
+  R=50\,\Omega: \quad i(t) &= 0.2\left(1 - e^{-500t}\right)\;\mathrm{A},
+    \label{eq:rl_r_50}\\
+  R=100\,\Omega: \quad i(t) &= 0.1\left(1 - e^{-1000t}\right)\;\mathrm{A},
+    \label{eq:rl_r_100}\\
+  R=200\,\Omega: \quad i(t) &= 0.05\left(1 - e^{-2000t}\right)\;\mathrm{A}.
+    \label{eq:rl_r_200}
+\end{align}
+Larger resistance both reduces the steady-state current $\Vs/R$ and
+increases the rate of rise (since $\tau_{RL} = L/R$ decreases), the inverse
+of the RC behavior where larger $R$ slows the response.
+
 \subsection{Second-Order RLC Response}
 \label{ssec:rlc_results}
 

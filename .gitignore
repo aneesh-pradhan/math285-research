@@ -23,6 +23,7 @@ env/
 *.swo
 *~
 .DS_Store
+*.letta
 
 # LaTeX build artifacts
 build/

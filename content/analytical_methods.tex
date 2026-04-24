@@ -198,3 +198,42 @@ $\Vs$ gives the complete analytic underdamped step response:
 \end{equation}
 For the typical step-response case $V_0 = 0$, this simplifies to
 $\vC(t) = \Vs\left[1 - e^{-\alpha t}\left(\cos\omega_d t + \frac{\alpha}{\omega_d}\sin\omega_d t\right)\right]$.
+
+For completeness, the initial conditions $\vC(0) = 0$ and $\dot{\vC}(0) = 0$
+are applied to the remaining two cases.
+For the critically damped case, the complete solution is
+$\vC(t) = v_{C,h}(t) + \Vs$ with
+$v_{C,h}(t) = (A_1 + A_2 t)\,e^{-\alpha t}$.
+Applying the initial conditions:
+\begin{align}
+  \vC(0) &= A_1 + \Vs = 0 \;\implies\; A_1 = -\Vs, \label{eq:crit_ic1}\\
+  \dot{\vC}(0) &= -\alpha A_1 + A_2 = 0 \;\implies\;
+                 A_2 = -\alpha\Vs, \label{eq:crit_ic2}
+\end{align}
+giving the complete critically damped step response:
+\begin{equation}
+  \vC(t) = \Vs\left[1 - (1 + \alpha t)\,e^{-\alpha t}\right].
+  \label{eq:crit_final}
+\end{equation}
+
+For the overdamped case,
+$v_{C,h}(t) = A_1 e^{r_1 t} + A_2 e^{r_2 t}$.
+Applying the initial conditions:
+\begin{align}
+  \vC(0) &= A_1 + A_2 + \Vs = 0 \;\implies\; A_1 + A_2 = -\Vs,
+    \label{eq:over_ic1}\\
+  \dot{\vC}(0) &= r_1 A_1 + r_2 A_2 = 0,
+    \label{eq:over_ic2}
+\end{align}
+and solving this $2\times2$ system:
+\begin{equation}
+  A_1 = -\Vs\,\frac{r_2}{r_2 - r_1}, \qquad
+  A_2 = \Vs\,\frac{r_1}{r_2 - r_1},
+  \label{eq:over_coeffs}
+\end{equation}
+giving the complete overdamped step response:
+\begin{equation}
+  \vC(t) = \Vs\left[1 -
+    \frac{r_2\,e^{r_1 t} - r_1\,e^{r_2 t}}{r_2 - r_1}\right].
+  \label{eq:over_final}
+\end{equation}
