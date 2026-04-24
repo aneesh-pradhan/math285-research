@@ -1,91 +1,49 @@
-% !TEX root = main.tex
-% Notes for Prof. Santiago:
-% I am trying to figure out a way to neatly section everything off along with adding
-% some sort of standardized academic paper formatting to the document.
-% I am also debating a single or double column layout for the report. 
 % 
+% Compile with pdflatex main.tex (this is built into VScode or overleaf)
 
-\documentclass[12pt, letterpaper]{article}
+\documentclass[journal,12pt,onecolumn]{IEEEtran}
+
+% ── Core packages ──────────────────────────────────────────────────────────────
 \usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{amsmath,amssymb,mathtools}
+\usepackage{graphicx}
+\usepackage{booktabs}
+\usepackage{cite}
+\usepackage{url}
+\usepackage{hyperref}
+\usepackage{microtype}
 
-\title{Exploring the use of differential equations in electric circuits}
+\title{Exploring the Use of Differential Equations in Electric Circuits}
+
+\author{%
+  Aneesh Pradhan\\
+  Prof. Matea Santiago\\
+  Department of Mathematics\\
+  California State University, East Bay\\
+}
 
 \begin{document}
+
 \maketitle
 
-Abstract
-
-In this paper, we explore series RLC circuits and the differential equations that power them. 
-We analyze the use of first and second order differential equations in modeling series RLC equations, 
-along with exploring real-world use cases and connecting them to these differential equations. 
-
-Key Words: 
-
-- Series RLC circuit
-- Differential equations
-
-
-Table of Contents
-
-1) Introduction
-
-2) Circuit equations
-
-In electric circuit theory, a series RLC circuit is a closed loop circuit consisting of a resistor, inductor and capacitor in series along with a voltage source. 
-
-The source material being used to primarily derive equations for the series RLC circuit are provided from Nilsson and Riedel's Electric Circuits 12th edition textbook.
-This textbook is primarily assigned as the main reference and material for ENGR 230 and CMPE 330 at Cal State East Bay, and relies on linear algebra and differential equations as 
-co-requisite courses. 
-
-2.1 Circuit Overview 
-
-We consider a series RLC circuit driven by a voltage source V(t). The quantity of interest is 
-the capacitor voltage vCt for t>= 0.
-
-We will assume the given component values:
-
-Source voltage: 20V
-
-Resistance: 40 Ohms $ \Omega $
-
-Inductance: 100 mH
-
-Capacitance: 25 $ \mu $ F
-
-Now that we have these variables in place, let's set up the tools we will need for our diff eq.
-
-State variables
-
-The two state variables here are the voltage across the capacitor and the current through the inductor, which also represents the current across the circuit.
-
-We choose these two variables as the capcaitor's voltage and inductor's current cannot change instantaneously, which makes them suitable for representing the system's
-energy state at any instant in time. 
-
-Initial conditions
-
-Our circuit will initially have a fully charged capacitor at 20 volts, and the inductor's current will start at zero. 
-
-Before the switch is flipped, the capacitor will behave like an open circuit and the inductor behaves like a short circuit. 
-
-Governing equations
-
-Kirchhoff's Voltage Law 
-
-Deriving Kirchhoff's Voltage Law from the textbook (reference 1), we get:
-
-Ri + Ldi/dt + 1/C (integral sign) i * dt = V(t)
-
-% Assumptions and limitations
-
-Assumptions and limitations
-
-We assume that all components in this circuit are ideal circuit elements. That is, 
-
-$ \alpha \beta \gamma \delta \epsilon \varepsilon \zeta \eta \theta \vartheta \iota \kappa \lambda \mu \nu \xi \xi \pi \int_{}^{} \lim_{x \to \infty} \sum_{n = 1}^{\infty} \frac{\frac{d^ y}{d x^} }{}    \,dx $
-
-References
-
-Nilsson and Riedel, Electric Circuits 12e
+\begin{abstract}
+This paper investigates series RLC circuits, comprising a resistor~(R),
+inductor~(L), and capacitor~(C) connected in series, through the lens of
+ordinary differential equations~(ODEs).
+We derive and analyze first-order ODEs governing simplified RC and RL
+sub-circuits, as well as the second-order ODE describing the full RLC system.
+Analytic solutions are obtained for all three configurations, and the role of
+resistance in controlling circuit damping is examined by varying component
+parameters.
+Our central research question asks: \emph{How do resistors influence the
+damping and stability of series RLC circuits as described by ODEs, and what
+are the practical implications for engineering applications such as filters
+and oscillators?}
+Results confirm that the resistor governs whether the circuit is overdamped,
+critically damped, or underdamped, with direct consequences for signal
+processing and control system design.
+\end{abstract}
 
 
 \end{document}
