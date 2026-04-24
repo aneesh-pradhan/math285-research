@@ -19,6 +19,8 @@ We model this dynamic resistance as
   \label{eq:thermal_resistance}
 \end{equation}
 where $R_0$ is the nominal resistance and $k$ is a heating coefficient.
+Since $ki^2$ must have units of ohms, $k$ has units of
+$\Omega/\mathrm{A}^2$.
 Similarly, an inductor with a saturating magnetic core loses effective
 inductance at high current.
 This effect is approximated by
@@ -55,7 +57,8 @@ state-space system
 \end{align}
 The system was integrated in Python using an adaptive RK45 method with
 $R_0=50\,\Omega$, $L_0=0.1\,\mathrm{H}$, $C=10\,\mu\mathrm{F}$,
-$k=8000$, and $I_{\mathrm{sat}}=0.05\,\mathrm{A}$.
+$k=8000\,\Omega/\mathrm{A}^2$, and
+$I_{\mathrm{sat}}=0.05\,\mathrm{A}$.
 These values are not meant to identify a specific commercial component;
 instead, they isolate how stress-dependent component behavior changes the
 same baseline RLC circuit studied analytically above.

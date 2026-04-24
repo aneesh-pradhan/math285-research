@@ -65,8 +65,8 @@ t_eval = np.linspace(t_span[0], t_span[1], 2000) # High resolution for smooth cu
 # modify the same underlying circuit dynamics.
 scenarios = {
     'ideal': 'Ideal Step Response (Baseline)',
-    'thermal': f'Thermal Resistor (k={k_thermal})',
-    'saturation': f'Inductor Saturation (Isat={I_sat}A)',
+    'thermal': f'Thermal Resistor (k={k_thermal:.0f} Ohm/A^2)',
+    'saturation': f'Inductor Saturation (Isat={I_sat} A)',
     'ac_input': 'AC Input at Resonance'
 }
 

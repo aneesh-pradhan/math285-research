@@ -55,7 +55,7 @@ the right-hand side represents the forcing from the voltage source.
 
 \subsection{Assumptions and Limitations}
 
-\paragraph{Assumptions.}
+\paragraph{Assumptions}
 We adopt the standard \emph{lumped-element model}: all resistance is
 concentrated in $R$, all inductance in $L$, and all capacitance in $C$,
 with no parasitic coupling between components.
@@ -64,7 +64,7 @@ frequency, and signal amplitude (i.e., linear, time-invariant behavior).
 Wires and switch contacts are treated as ideal (zero resistance, zero
 inductance).
 
-\paragraph{Limitations.}
+\paragraph{Limitations}
 Real resistors exhibit temperature-dependent resistance governed by
 $R(T) = R_0[1 + \alpha_R(T - T_0)]$, introducing nonlinear behavior
 under large current loads.
@@ -134,7 +134,7 @@ The discriminant $\Delta = \alpha^2 - \omega_0^2$ determines damping behavior:
 
 \subsubsection{Second-Order RLC Circuit: General Analytic Solution}
 
-\paragraph{Homogeneous solutions.}
+\paragraph{Homogeneous solutions}
 For each damping case, the general homogeneous solution is:
 
 \noindent\textit{Overdamped} ($r_1, r_2$ real, distinct):
@@ -155,19 +155,30 @@ For each damping case, the general homogeneous solution is:
   \label{eq:under}
 \end{equation}
 
-\paragraph{Non-homogeneous solution.}
+\paragraph{Non-homogeneous solution}
 For a constant forcing $V(t) = \Vs$, the particular solution is simply
 $v_{C,p} = \Vs$.
 For time-varying inputs, two systematic methods apply:
 (i)~\emph{Variation of parameters}, which replaces the constants $A_1, A_2$
 with functions $u_1(t), u_2(t)$ determined by a two-equation system derived
-from the ODE; or
+from the ODE.
+For example, in the underdamped case one may write
+\begin{equation}
+  \vC(t) = \Vs + u_1(t)e^{-\alpha t}\cos\omega_d t
+    + u_2(t)e^{-\alpha t}\sin\omega_d t,
+  \label{eq:vop_form}
+\end{equation}
+where $u_1(t)$ and $u_2(t)$ are chosen so that the forced equation and its
+auxiliary constraint are both satisfied.
+This converts a nonconstant forcing term into first-order equations for
+$u_1$ and $u_2$.
+Alternatively,
 (ii)~\emph{Laplace transforms}, which convert the ODE to an algebraic equation
 $\mathcal{L}\{\vC\}(s) = \mathcal{L}\{V(t)\}(s) \cdot H(s)$, where
 $H(s) = 1/(LCs^2 + RCs + 1)$ is the circuit transfer function,
 followed by a partial-fraction expansion and inverse transform.
 
-\paragraph{Applying initial conditions (underdamped case).}
+\paragraph{Applying initial conditions (underdamped case)}
 The complete solution is $\vC(t) = v_{C,h}(t) + \Vs$.
 Applying $\vC(0) = V_0$ and $\dot{\vC}(0) = 0$:
 \begin{align}
