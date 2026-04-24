@@ -24,6 +24,9 @@ k_thermal = 8000.0 # Heating coefficient for R(i)
 I_sat = 0.05       # Saturation current for L(i) in Amps
 
 # --- 3. The Unified ODE System ---
+# This function implements the baseline ideal step response and several
+# phenomenological non-ideal variations (thermal resistor, saturating
+# inductor, and resonant AC forcing) for comparison.
 def unified_rlc(t, y, scenario):
     """
     y[0] is v_c (capacitor voltage)
@@ -57,7 +60,9 @@ y0 = [0.0, 0.0] # Initial conditions: uncharged, no current
 t_span = (0.0, 0.04) # Simulate for 40 milliseconds
 t_eval = np.linspace(t_span[0], t_span[1], 2000) # High resolution for smooth curves
 
-# Scenarios to run
+# Scenarios to run. The ideal baseline is compared against three
+# non-ideal variants to show how component stress and resonant forcing
+# modify the same underlying circuit dynamics.
 scenarios = {
     'ideal': 'Ideal Step Response (Baseline)',
     'thermal': f'Thermal Resistor (k={k_thermal})',

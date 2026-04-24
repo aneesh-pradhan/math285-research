@@ -1,9 +1,53 @@
-# Created by venv; see https://docs.python.org/3/library/venv.html
-*
-!.gitignore
-!content/
-!content/nonideal_simulation.tex
-!figures/
-!figures/nonideal_rlc_simulation.pdf
-!figures/nonideal_rlc_simulation.png
-!simulate_rlc.py
+# Python artifacts
+__pycache__/
+*.py[cod]
+*$py.class
+.Python
+
+# Virtual environments
+bin/
+lib/
+lib64
+lib64/
+include/
+pyvenv.cfg
+.venv/
+venv/
+ENV/
+env/
+
+# Editor and OS files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+.DS_Store
+
+# LaTeX build artifacts
+build/
+*.aux
+*.bbl
+*.blg
+*.fdb_latexmk
+*.fls
+*.log
+*.out
+*.synctex.gz
+*.toc
+*.nav
+*.snm
+*.vrb
+*.lot
+*.lof
+*.idx
+*.ilg
+*.ind
+
+# Matplotlib cache
+.mplrc
+
+# Temporary files
+*.tmp
+*.bak
+*.orig

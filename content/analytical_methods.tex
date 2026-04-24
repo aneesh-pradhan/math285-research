@@ -175,5 +175,12 @@ Applying $\vC(0) = V_0$ and $\dot{\vC}(0) = 0$:
   \dot{\vC}(0) &= -\alpha A_1 + \omega_d A_2 = 0 \;\implies\;
                  A_2 = \frac{\alpha(V_0 - \Vs)}{\omega_d}. \label{eq:ic2}
 \end{align}
-Substituting \eqref{eq:ic1}--\eqref{eq:ic2} into \eqref{eq:under} and
-adding $\Vs$ gives the complete analytic solution for the underdamped case.
+Substituting \eqref{eq:ic1}--\eqref{eq:ic2} into \eqref{eq:under} and adding
+$\Vs$ gives the complete analytic underdamped step response:
+\begin{equation}
+  \vC(t) = \Vs + (V_0 - \Vs)e^{-\alpha t}\left(
+    \cos\omega_d t + \frac{\alpha}{\omega_d}\sin\omega_d t\right).
+  \label{eq:underdamped_final}
+\end{equation}
+For the typical step-response case $V_0 = 0$, this simplifies to
+$\vC(t) = \Vs\left[1 - e^{-\alpha t}\left(\cos\omega_d t + \frac{\alpha}{\omega_d}\sin\omega_d t\right)\right]$.
