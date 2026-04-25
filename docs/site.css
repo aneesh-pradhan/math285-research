@@ -1,0 +1,47 @@
+body {
+  font-family: "Times New Roman", Times, serif;
+  font-size: 18px;
+  line-height: 1.55;
+  max-width: 76ch;
+  padding: 2.5rem 1.25rem;
+}
+
+.site-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 2rem;
+}
+
+.site-actions a {
+  border: 1px solid currentColor;
+  border-radius: 999px;
+  padding: 0.35rem 0.75rem;
+  text-decoration: none;
+}
+
+.site-actions a:hover {
+  background: CanvasText;
+  color: Canvas;
+}
+
+img {
+  display: block;
+  height: auto;
+  margin: 1rem auto;
+  max-width: 100%;
+}
+
+.mathjax-env {
+  overflow-x: auto;
+  padding: 0.4rem 0;
+}
+
+table {
+  max-width: 100%;
+}
+
+td,
+th {
+  padding: 0.25rem 0.5rem;
+}

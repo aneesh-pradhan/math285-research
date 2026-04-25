@@ -1,0 +1,513 @@
+<!DOCTYPE html> 
+<html lang='en-US' xml:lang='en-US'> 
+<head><title>Exploring the Use of Differential Equations in Electric Circuits</title> 
+<meta charset='utf-8' /> 
+<meta content='TeX4ht (https://tug.org/tex4ht/)' name='generator' /> 
+<meta content='width=device-width,initial-scale=1' name='viewport' /> 
+<link href='index.css' rel='stylesheet' type='text/css' />
+<link href='site.css' rel='stylesheet' type='text/css' /> 
+<meta content='index.tex' name='src' /> 
+<script>
+window.MathJax = {
+  tex: {
+    tags: "ams",
+    macros: {
+      vC: "v_C",
+      Vs: "V_s",
+      Rcrit: "R_{\\mathrm{crit}}"
+    }
+  }
+};
+</script> 
+<script async='async' id='MathJax-script' src='https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-chtml-full.js' type='text/javascript'></script>  
+</head><body>
+<div class="site-actions">
+  <a href="main.pdf">View PDF</a>
+  <a href="#x1-2r1">Read HTML</a>
+</div>
+<!-- l. 4 --><p class='noindent'>
+                                                                                                  
+                                                                                                  
+</p><!-- l. 4 --><p class='indent'>
+                                                                                                  
+                                                                                                  
+</p><!-- l. 4 --><p class='noindent'>Exploring the Use of Differential Equations in
+Electric Circuits
+</p><!-- l. 4 --><p class='noindent'>Aneesh Pradhan
+</p><!-- l. 4 --><p class='indent'>  *A. Pradhan is with the Department of Mathematics, California State University, East Bay, Hayward, CA,
+USA.†Prepared for MATH 285 under the supervision of Prof. Matea Santiago.
+</p><!-- l. 1 --><p class='noindent'>Abstract
+        We  derive  and  analyze  ordinary  differential  equations  (ODEs)  governing  series  RLC  circuits  to  show  how
+     resistance  controls  damping  and  stability.  First-order  ODEs  governing  simplified  RC  and  RL  sub-circuits,  as
+     well  as  the  second-order  ODE  describing  the  full  RLC  system,  are  derived  and  solved  analytically  for  all  three
+     configurations,  and  the  role  of  resistance  in  controlling  circuit  damping  is  examined  by  varying  component
+     parameters.  The  ideal  model  is  then  extended  numerically  to  include  current-dependent  resistor  heating,  inductor
+     saturation, and resonant AC forcing. These nonlinear extensions are phenomenological models chosen to illustrate
+     how  stress-dependent  component  behavior  can  alter  transient  damping.  Our  central  research  question  asks:  How
+     do  resistors  influence  the  damping  and  stability  of  series  RLC  circuits  as  described  by  ODEs,  and  what  are  the
+     practical implications for engineering applications such as filters and oscillators? The analysis identifies resistance
+     as  the  parameter  that  governs  whether  the  circuit  is  overdamped,  critically  damped,  or  underdamped,  while  the
+     numerical results show how non-ideal components can suppress, shift, or amplify transient oscillations.
+</p><!-- l. 24 --><p class='noindent'>Index  Terms
+        series  RLC  circuit,  ordinary  differential  equations,  damping,  Kirchhoff’s  Voltage  Law,  stability  analysis,
+     nonlinear simulation, signal processing.
+</p><!-- l. 1 --><p class='noindent'>
+  NOMENCLATURE
+</p><!-- l. 2 --><p class='indent'>
+  <span class='mathjax-inline'>\(R\)</span>       Series resistance, measured in <span class='mathjax-inline'>\(\Omega \)</span>.
+  <span class='mathjax-inline'>\(L\)</span>       Series inductance, measured in H.
+  <span class='mathjax-inline'>\(C\)</span>       Series capacitance, measured in F.
+  <span class='mathjax-inline'>\(V(t)\)</span>       Applied source voltage.
+  <span class='mathjax-inline'>\(\Vs \)</span>       Step-source amplitude.
+  <span class='mathjax-inline'>\(\vC (t)\)</span>       Capacitor voltage, the primary output variable.
+  <span class='mathjax-inline'>\(\dot {v}_C(t)\)</span>       Time derivative of capacitor voltage, <span class='mathjax-inline'>\(dv_C/dt\)</span>, measured in V/s.
+  <span class='mathjax-inline'>\(i(t)\)</span>       Series current through the resistor, inductor, and capacitor.
+  <span class='mathjax-inline'>\(\alpha \)</span>       Damping coefficient, <span class='mathjax-inline'>\(\alpha = R/(2L)\)</span>.
+                                                                                                  
+                                                                                                  
+  <span class='mathjax-inline'>\(\omega _0\)</span>       Undamped natural frequency, <span class='mathjax-inline'>\(\omega _0 = 1/\sqrt {LC}\)</span>.
+  <span class='mathjax-inline'>\(\omega _d\)</span>       Damped natural frequency for the underdamped case.
+  <span class='mathjax-inline'>\(\Rcrit \)</span>       Critical resistance, <span class='mathjax-inline'>\(\Rcrit = 2\sqrt {L/C}\)</span>.
+  <span class='mathjax-inline'>\(R_0\)</span>       Nominal resistance used in the non-ideal simulation.
+  <span class='mathjax-inline'>\(L_0\)</span>       Nominal inductance used in the non-ideal simulation.
+  <span class='mathjax-inline'>\(k\)</span>       Heating coefficient in the current-dependent resistance model, measured in <span class='mathjax-inline'>\(\Omega /\mathrm {A}^2\)</span>.
+  <span class='mathjax-inline'>\(I_{\mathrm {sat}}\)</span>       Saturation current threshold for the inductor model.
+  <span class='mathjax-inline'>\(y_1,y_2\)</span>       State variables used in the numerical simulation.
+</p><!-- l. 1 --><p class='noindent' id='iiacircuit-overview'>
+<a id='x1-2r1'></a>
+I.  INTRODUCTION
+<a id='Q1-1-0'></a>
+</p><!-- l. 4 --><p class='indent'>  The dynamic behavior of such circuits is naturally captured by ordinary differential equations (ODEs).
+Simpler RC and RL sub-circuits obey first-order  ODEs, while the complete RLC system requires a
+second-order  ODE to describe the interplay between energy stored in the inductor’s magnetic field
+and the capacitor’s electric field. Understanding the transition from first- to second-order models
+clarifies why the resistor plays an indispensable role: it is the only purely dissipative element in the
+circuit.
+</p><!-- l. 14 --><p class='indent'>  Our scientific question is:
+     How  do  resistors  influence  the  damping  and  stability  of  series  RLC  circuits  as  described  by
+     ODEs, and what are the practical implications in engineering applications?
+</p><!-- l. 22 --><p class='indent'>  This paper answers that question through a two-part approach: first by deriving ideal analytic solutions for RC,
+RL, and RLC circuits, and second by comparing those ideal responses with numerical simulations that include
+phenomenological non-ideal resistor and inductor behavior.
+</p><!-- l. 27 --><p class='indent'>  The remainder of this paper is structured as follows. Section <a href='#x1-3r2'>II<!-- tex4ht:ref: sec:circuit  --></a> introduces the circuit configuration and the
+governing physical principles. Section <a href='#x1-16r3'>III<!-- tex4ht:ref: sec:methods  --></a> details the derivation of the governing equations, identification
+of variables and parameters, and the analytic solutions for each circuit type. Section <a href='#x1-49r4'>IV<!-- tex4ht:ref: sec:results  --></a> presents
+results from varying circuit parameters and initial conditions. Section <a href='#x1-64r5'>V<!-- tex4ht:ref: sec:nonideal  --></a> extends the ideal model to
+non-ideal components — specifically current-dependent resistor heating and inductor saturation — and
+resonant AC forcing, using numerical simulation. Section <a href='#x1-76r6'>VI<!-- tex4ht:ref: sec:discussion  --></a> interprets the findings in the context of
+our research question, discusses limitations, and proposes future work. Section <a href='#x1-80r7'>VII<!-- tex4ht:ref: sec:conclusion  --></a> concludes the
+paper.
+<a id='x1-3r2'></a>
+</p><!-- l. 1 --><p class='noindent' id='iiacircuit-overview'>II.  SYSTEM MODEL AND GOVERNING PRINCIPLES
+<a id='Q1-1-0'></a>
+</p><!-- l. 4 --><p class='indent' id='iiacircuit-overview'>  
+                                                                                                  
+                                                                                                  
+<a id='x1-4r1'></a>
+  A.  Circuit Overview
+<a id='Q1-1-0'></a>
+</p><!-- l. 6 --><p class='indent'>  We consider a series RLC circuit driven by a step voltage source <span class='mathjax-inline'>\(V(t)\)</span>. At <span class='mathjax-inline'>\(t = 0\)</span>, a DC source of amplitude <span class='mathjax-inline'>\(\Vs \)</span> is
+connected to an initially uncharged capacitor, so <span class='mathjax-inline'>\(V(t) = \Vs \)</span> for the post-switching interval <span class='mathjax-inline'>\(t \geq 0\)</span>. The quantity of primary
+interest is the capacitor voltage <span class='mathjax-inline'>\(\vC (t)\)</span> for <span class='mathjax-inline'>\(t \geq 0\)</span>. The component values used for the main RLC case study are summarized
+in Table <a href='#nominal-component-values'>I<!-- tex4ht:ref: tab:nominal-values  --></a>.
+                                                                                                  
+                                                                                                  
+</p><!-- l. 15 --><p class='indent'>  </p><hr class='float' /><div class='float' id='nominal-component-values'>
+                                                                                                  
+                                                                                                  
+<a id='x1-5r1'></a>
+TABLE I<br />
+NOMINAL COMPONENT VALUES
+<div class='tabular'>
+ <table class='tabular' id='TBL-1'><colgroup id='TBL-1-1g'><col id='TBL-1-1' /><col id='TBL-1-2' /><col id='TBL-1-3' /></colgroup><tr id='TBL-1-1-' style='vertical-align:baseline;'><td class='td01' id='TBL-1-1-1' style='white-space:normal; text-align:left;'>Quantity               </td><td class='td11' id='TBL-1-1-2' style='white-space:normal; text-align:left;'> Symbol  </td><td class='td10' id='TBL-1-1-3' style='white-space:normal; text-align:left;'> Nominal value</td>
+</tr><tr id='TBL-1-2-' style='vertical-align:baseline;'><td class='td01' id='TBL-1-2-1' style='white-space:normal; text-align:left;'>Source amplitude  </td><td class='td11' id='TBL-1-2-2' style='white-space:normal; text-align:left;'> <span class='mathjax-inline'>\(\Vs \)</span>      </td><td class='td10' id='TBL-1-2-3' style='white-space:normal; text-align:left;'> <span class='mathjax-inline'>\(10\,\mathrm {V}\)</span>          </td>
+</tr><tr id='TBL-1-3-' style='vertical-align:baseline;'><td class='td01' id='TBL-1-3-1' style='white-space:normal; text-align:left;'>Resistance cases    </td><td class='td11' id='TBL-1-3-2' style='white-space:normal; text-align:left;'> <span class='mathjax-inline'>\(R\)</span>      </td><td class='td10' id='TBL-1-3-3' style='white-space:normal; text-align:left;'> <span class='mathjax-inline'>\(50\,\Omega \)</span>, <span class='mathjax-inline'>\(200\,\Omega \)</span>, <span class='mathjax-inline'>\(500\,\Omega \)</span>                   </td>
+</tr><tr id='TBL-1-4-' style='vertical-align:baseline;'><td class='td01' id='TBL-1-4-1' style='white-space:normal; text-align:left;'>Inductance             </td><td class='td11' id='TBL-1-4-2' style='white-space:normal; text-align:left;'> <span class='mathjax-inline'>\(L\)</span>      </td><td class='td10' id='TBL-1-4-3' style='white-space:normal; text-align:left;'> <span class='mathjax-inline'>\(100\,\mathrm {mH} = 0.1\,\mathrm {H}\)</span>          </td>
+</tr><tr id='TBL-1-5-' style='vertical-align:baseline;'><td class='td01' id='TBL-1-5-1' style='white-space:normal; text-align:left;'>Capacitance           </td><td class='td11' id='TBL-1-5-2' style='white-space:normal; text-align:left;'> <span class='mathjax-inline'>\(C\)</span>      </td><td class='td10' id='TBL-1-5-3' style='white-space:normal; text-align:left;'> <span class='mathjax-inline'>\(10\,\mu \mathrm {F} = 10\times 10^{-6}\,\mathrm {F}\)</span>          </td>
+
+</tr></table>                                                                              </div>
+                                                                                                  
+                                                                                                  
+  </div><hr class='endfloat' />
+<!-- l. 31 --><p class='indent'>  These values were chosen because they produce simple, transparent damping parameters while remaining
+realistic for a bench-top laboratory circuit: <span class='mathjax-inline'>\(LC = 1\times 10^{-6}\,\mathrm {s}^2\)</span>, so <span class='mathjax-inline'>\(\omega _0 = 1/\sqrt {LC} = 1000\,\mathrm {rad/s}\)</span>, and <span class='mathjax-inline'>\(\Rcrit = 2\sqrt {L/C} = 200\,\Omega \)</span>. Thus <span class='mathjax-inline'>\(R = 50\,\Omega \)</span>, <span class='mathjax-inline'>\(R = 200\,\Omega \)</span>, and <span class='mathjax-inline'>\(R = 500\,\Omega \)</span> provide clear underdamped, critically
+damped, and overdamped examples, respectively.
+</p><!-- l. 40 --><p class='indent' id='ivcsecondorder-rlc-response'>  
+<a id='x1-6r2'></a>
+  B.  State Variables
+<a id='Q1-1-1'></a>
+</p><!-- l. 42 --><p class='indent'>  The two state variables are the capacitor voltage <span class='mathjax-inline'>\(\vC (t)\)</span> and the inductor current <span class='mathjax-inline'>\(i(t)\)</span>, which also equals the series
+current through every element. These quantities are chosen because neither can change instantaneously: the
+capacitor voltage is proportional to stored charge (<span class='mathjax-inline'>\(\vC = q/C\)</span>), and the inductor current is proportional to
+stored magnetic flux (<span class='mathjax-inline'>\(\Psi = Li\)</span>). Consequently, they fully characterize the energy state of the circuit at any
+instant.
+</p><!-- l. 50 --><p class='indent' id='ivcsecondorder-rlc-response'>  
+<a id='x1-7r3'></a>
+  C.  Initial Conditions
+<a id='Q1-1-1'></a>
+</p><!-- l. 52 --><p class='indent'>  Before the switch is closed at <span class='mathjax-inline'>\(t = 0\)</span>: </p>
+    <ul class='itemize1'>
+    <li class='itemize'>The capacitor is initially uncharged: <span class='mathjax-inline'>\(\vC (0) = 0\,\mathrm {V}\)</span>.
+    </li>
+    <li class='itemize'>No current flows: <span class='mathjax-inline'>\(i(0) = 0\,\mathrm {A}\)</span>.</li></ul>
+<!-- l. 57 --><p class='noindent'>Prior to switching, the capacitor behaves as an open circuit (blocking DC current) and the ideal inductor behaves as
+a short circuit (zero DC voltage drop).
+</p><!-- l. 61 --><p class='indent' id='ivcsecondorder-rlc-response'>  
+<a id='x1-8r4'></a>
+  D.  Governing Equations
+<a id='Q1-1-1'></a>
+</p><!-- l. 63 --><p class='indent'>  
+<a id='x1-9r1'></a>
+  Applying Kirchhoff’s Voltage Law (KVL) around the series loop <span class='cite'> [?]</span>: </p><div class='mathjax-env mathjax-equation'>\begin{equation} Ri + L\frac {di}{dt} + \vC = V(t). \label {eq:kvl} \end{equation}</div><p><a id='x1-10r1'></a>
+<!-- l. 71 --></p><p class='indent'>  
+<a id='x1-11r2'></a>
+  Using the capacitor voltage relationship <span class='mathjax-inline'>\(i(t) = C\,d\vC /dt\)</span> and substituting into (<a href='#x1-10r1'>1<!-- tex4ht:ref: eq:kvl  --></a>) yields the governing second-order ODE:
+</p><div class='mathjax-env mathjax-equation'>\begin{equation} LC\frac {d^2\vC }{dt^2} + RC\frac {d\vC }{dt} + \vC = V(t). \label {eq:rlc2nd} \end{equation}</div><p><a id='x1-12r2'></a>
+<!-- l. 80 --></p><p class='indent'>  
+<a id='x1-13r3'></a>
+  For an RC circuit (inductor replaced by an ideal wire, <span class='mathjax-inline'>\(L \to 0\)</span>): </p><div class='mathjax-env mathjax-equation'>\begin{equation} \frac {d\vC }{dt} + \frac {1}{RC}\,\vC = \frac {\Vs }{RC}. \label {eq:rc1st} \end{equation}</div><p><a id='x1-14r3'></a>
+<!-- l. 88 --></p><p class='indent'>  For an RL circuit (capacitor replaced by an ideal wire): </p><div class='mathjax-env mathjax-equation'>\begin{equation} \frac {di}{dt} + \frac {R}{L}\,i = \frac {\Vs }{L}. \label {eq:rl1st} \end{equation}</div><p><a id='x1-15r4'></a>
+<a id='x1-16r3'></a>
+<!-- l. 1 --></p><p class='noindent' id='ivcsecondorder-rlc-response'>III.  ANALYTICAL METHODS
+<a id='Q1-1-1'></a>
+</p><!-- l. 4 --><p class='indent' id='ivcsecondorder-rlc-response'>  
+                                                                                                  
+                                                                                                  
+<a id='x1-17r1'></a>
+  A.  Equations, Conditions, and Connection to the Application
+<a id='Q1-1-1'></a>
+</p><!-- l. 6 --><p class='indent'>  The three ODEs derived above–(<a href='#x1-14r3'>3<!-- tex4ht:ref: eq:rc1st  --></a>), (<a href='#x1-15r4'>4<!-- tex4ht:ref: eq:rl1st  --></a>), and (<a href='#x1-12r2'>2<!-- tex4ht:ref: eq:rlc2nd  --></a>)–together model the spectrum from simple to complex circuit
+behavior. With initial conditions applied, the initial value problems (IVPs) are:
+</p><!-- l. 11 --><p class='noindent'>RC  circuit  (first-order): </p><div class='mathjax-env mathjax-equation'>\begin{equation} \frac {d\vC }{dt} + \frac {1}{RC}\,\vC = \frac {\Vs }{RC}, \qquad \vC (0) = V_0. \label {eq:rc_ivp} \end{equation}</div><p><a id='x1-18r5'></a>
+<!-- l. 17 --></p><p class='noindent'>RL  circuit  (first-order): </p><div class='mathjax-env mathjax-equation'>\begin{equation} \frac {di}{dt} + \frac {R}{L}\,i = \frac {\Vs }{L}, \qquad i(0) = 0. \label {eq:rl_ivp} \end{equation}</div><p><a id='x1-19r6'></a>
+<!-- l. 23 --></p><p class='noindent'>RLC  circuit  (second-order): </p><div class='mathjax-env mathjax-equation'>\begin{equation} LC\frac {d^2\vC }{dt^2} + RC\frac {d\vC }{dt} + \vC = \Vs , \qquad \vC (0) = 0\,\mathrm {V},\quad \dot {\vC }(0) = 0. \label {eq:rlc_ivp} \end{equation}</div><p><a id='x1-20r7'></a>
+<!-- l. 30 --></p><p class='indent'>  Each equation models a physical balance: the left-hand terms represent energy dissipation (via <span class='mathjax-inline'>\(R\)</span>)
+and energy storage (via <span class='mathjax-inline'>\(L\)</span> and <span class='mathjax-inline'>\(C\)</span>), while the right-hand side represents the forcing from the voltage
+source.
+</p><!-- l. 34 --><p class='indent' id='ivcsecondorder-rlc-response'>  
+<a id='x1-21r2'></a>
+  B.  Independent and Dependent Variables
+<a id='Q1-1-1'></a>
+</p>
+    <ul class='itemize1'>
+    <li class='itemize'>Independent  variable: time <span class='mathjax-inline'>\(t\)</span> in <span class='mathjax-inline'>\(\mathrm {s}\)</span>.
+    </li>
+    <li class='itemize'>Dependent  variables: <span class='mathjax-inline'>\(\vC (t)\)</span> in <span class='mathjax-inline'>\(\mathrm {V}\)</span> (capacitor voltage) and <span class='mathjax-inline'>\(i(t)\)</span> in <span class='mathjax-inline'>\(\mathrm {A}\)</span> (series current).</li></ul>
+<!-- l. 42 --><p class='indent' id='ivcsecondorder-rlc-response'>  
+<a id='x1-22r3'></a>
+  C.  Parameters
+<a id='Q1-1-1'></a>
+</p>
+    <ul class='itemize1'>
+    <li class='itemize'><span class='mathjax-inline'>\(R\)</span>:  resistance;  dissipates  electrical  energy  as  heat.  Appears  in  the  first-order  damping  term  <span class='mathjax-inline'>\(R/L\)</span>  and  the
+    second-order damping coefficient <span class='mathjax-inline'>\(\alpha = R/(2L)\)</span>.
+    </li>
+    <li class='itemize'><span class='mathjax-inline'>\(L = 0.1\,\mathrm {H}\)</span>: inductance; stores energy in a magnetic field. Governs how quickly current can change.
+    </li>
+    <li class='itemize'><span class='mathjax-inline'>\(C = 10\times 10^{-6}\,\mathrm {F}\)</span>: capacitance; stores energy in an electric field. Governs how quickly voltage can change.
+    </li>
+    <li class='itemize'><span class='mathjax-inline'>\(\Vs = 10\,\mathrm {V}\)</span>: step-input amplitude. Represents a DC voltage switched on at <span class='mathjax-inline'>\(t = 0\)</span>.</li></ul>
+<!-- l. 56 --><p class='indent' id='ivcsecondorder-rlc-response'>  
+<a id='x1-23r4'></a>
+  D.  Assumptions and Limitations
+<a id='Q1-1-1'></a>
+</p><!-- l. 58 --><p class='indent'>  
+                                                                                                  
+                                                                                                  
+<a id='x1-24r1'></a>
+  We adopt the standard lumped-element model: all resistance is concentrated in <span class='mathjax-inline'>\(R\)</span>, all inductance in <span class='mathjax-inline'>\(L\)</span>, and all
+capacitance in <span class='mathjax-inline'>\(C\)</span>, with no parasitic coupling between components. Component values are assumed to be constant
+with respect to temperature, frequency, and signal amplitude (i.e., linear, time-invariant behavior). Wires and
+switch contacts are treated as ideal (zero resistance, zero inductance).
+</p><!-- l. 67 --><p class='indent'>  
+<a id='x1-25r2'></a>
+  Real resistors exhibit temperature-dependent resistance governed by <span class='mathjax-inline'>\(R(T) = R_0[1 + \alpha _R(T - T_0)]\)</span>, introducing nonlinear behavior under
+large current loads. At high frequencies, parasitic inductance in capacitors and parasitic capacitance in inductors
+violate the lumped-element assumption, requiring distributed-element or transmission-line models. The ideal
+step-input assumption ignores source impedance and switching transients present in physical systems. Section <a href='#x1-64r5'>V<!-- tex4ht:ref: sec:nonideal  --></a>
+relaxes two of these assumptions by simulating current-dependent resistor heating and inductor
+saturation.
+</p><!-- l. 79 --><p class='indent' id='ivcsecondorder-rlc-response'>  
+<a id='x1-26r5'></a>
+  E.  Analytic Solutions
+<a id='Q1-1-1'></a>
+</p><!-- l. 81 --><p class='indent'>  
+<a id='x1-27r1'></a>
+  Equation (<a href='#x1-18r5'>5<!-- tex4ht:ref: eq:rc_ivp  --></a>) is a linear first-order ODE with constant coefficients. Using the integrating factor <span class='mathjax-inline'>\(\mu (t) = e^{t/(RC)}\)</span>, the
+general solution is: </p><div class='mathjax-env mathjax-equation'>\begin{equation} \vC (t) = \Vs + (V_0 - \Vs )\,e^{-t/(RC)}. \label {eq:rc_sol} \end{equation}</div><p><a id='x1-28r8'></a> The time constant <span class='mathjax-inline'>\(\tau _{RC} = RC\)</span> determines how quickly <span class='mathjax-inline'>\(\vC \)</span> relaxes to the steady-state value
+<span class='mathjax-inline'>\(\Vs \)</span>.
+<!-- l. 93 --></p><p class='indent'>  
+<a id='x1-29r2'></a>
+  Similarly, (<a href='#x1-19r6'>6<!-- tex4ht:ref: eq:rl_ivp  --></a>) yields: </p><div class='mathjax-env mathjax-equation'>\begin{equation} i(t) = \frac {\Vs }{R}\!\left (1 - e^{-(R/L)t}\right ). \label {eq:rl_sol} \end{equation}</div><p><a id='x1-30r9'></a> The time constant is <span class='mathjax-inline'>\(\tau _{RL} = L/R\)</span>.
+<!-- l. 102 --></p><p class='indent'>  
+<a id='x1-31r3'></a>
+  Seeking homogeneous solutions of the form <span class='mathjax-inline'>\(e^{rt}\)</span> in (<a href='#x1-20r7'>7<!-- tex4ht:ref: eq:rlc_ivp  --></a>) leads to the characteristic equation: </p><div class='mathjax-env mathjax-equation'>\begin{equation} LCr^2 + RCr + 1 = 0. \label {eq:char} \end{equation}</div><p><a id='x1-32r10'></a> Dividing by <span class='mathjax-inline'>\(LC\)</span> and
+introducing the standard parameters </p><div class='mathjax-env mathjax-equation'>\begin{equation} \alpha = \frac {R}{2L}, \qquad \omega _0 = \frac {1}{\sqrt {LC}}, \label {eq:params} \end{equation}</div><p><a id='x1-33r11'></a> the roots become <span class='mathjax-inline'>\(r = -\alpha \pm \sqrt {\alpha ^2 - \omega _0^2}\)</span>. The discriminant <span class='mathjax-inline'>\(\Delta = \alpha ^2 - \omega _0^2\)</span> determines damping
+behavior:
+    </p><ul class='itemize1'>
+    <li class='itemize'>Overdamped  (<span class='mathjax-inline'>\(\Delta &gt; 0\)</span>,  i.e. <span class='mathjax-inline'>\(R &gt; 2\sqrt {L/C}\)</span>):  two  distinct  real  negative  roots.  The  circuit  returns  to  equilibrium  without
+    oscillating, but slowly. This occurs in high-resistance configurations such as lossy filters.
+    </li>
+    <li class='itemize'>Critically  damped  (<span class='mathjax-inline'>\(\Delta = 0\)</span>,  i.e. <span class='mathjax-inline'>\(R = R_\mathrm {crit} = 2\sqrt {L/C}\)</span>):  one  repeated  real  root  <span class='mathjax-inline'>\(r = -\alpha \)</span>.  Fastest  non-oscillatory  return  to  equilibrium;
+    used in precision instruments that must settle quickly.
+    </li>
+    <li class='itemize'>Underdamped (<span class='mathjax-inline'>\(\Delta &lt; 0\)</span>, i.e. <span class='mathjax-inline'>\(R &lt; 2\sqrt {L/C}\)</span>): two complex conjugate roots <span class='mathjax-inline'>\(r = -\alpha \pm j\omega _d\)</span>, where <span class='mathjax-inline'>\(\omega _d = \sqrt {\omega _0^2 - \alpha ^2}\)</span> is the damped natural frequency. The
+    circuit oscillates with exponentially decaying amplitude; typical in resonant and tuned circuits.</li></ul>
+<!-- l. 135 --><p class='indent'>  
+<a id='x1-34r4'></a>
+  
+                                                                                                  
+                                                                                                  
+<a id='x1-35r1'></a>
+  For each damping case, the general homogeneous solution is:
+</p><!-- l. 140 --><p class='noindent'>Overdamped  (<span class='mathjax-inline'>\(r_1, r_2\)</span> real, distinct): </p><div class='mathjax-env mathjax-equation'>\begin{equation} v_{C,h}(t) = A_1 e^{r_1 t} + A_2 e^{r_2 t}. \label {eq:over} \end{equation}</div><p><a id='x1-36r12'></a>
+<!-- l. 146 --></p><p class='noindent'>Critically damped  (<span class='mathjax-inline'>\(r = -\alpha \)</span> repeated): </p><div class='mathjax-env mathjax-equation'>\begin{equation} v_{C,h}(t) = (A_1 + A_2 t)\,e^{-\alpha t}. \label {eq:crit} \end{equation}</div><p><a id='x1-37r13'></a>
+<!-- l. 152 --></p><p class='noindent'>Underdamped  (complex roots): </p><div class='mathjax-env mathjax-equation'>\begin{equation} v_{C,h}(t) = e^{-\alpha t}\!\left (A_1\cos \omega _d t + A_2\sin \omega _d t\right ). \label {eq:under} \end{equation}</div><p><a id='x1-38r14'></a>
+<!-- l. 158 --></p><p class='indent'>  
+<a id='x1-39r2'></a>
+  For a constant forcing <span class='mathjax-inline'>\(V(t) = \Vs \)</span>, the particular solution is simply <span class='mathjax-inline'>\(v_{C,p} = \Vs \)</span>. For time-varying inputs, two systematic methods
+apply: (i) Variation of parameters, which replaces the constants <span class='mathjax-inline'>\(A_1, A_2\)</span> with functions <span class='mathjax-inline'>\(u_1(t), u_2(t)\)</span> determined by a two-equation
+system derived from the ODE. For example, in the underdamped case one may write </p><div class='mathjax-env mathjax-equation'>\begin{equation} \vC (t) = \Vs + u_1(t)e^{-\alpha t}\cos \omega _d t + u_2(t)e^{-\alpha t}\sin \omega _d t, \label {eq:vop_form} \end{equation}</div><p><a id='x1-40r15'></a> where <span class='mathjax-inline'>\(u_1(t)\)</span> and <span class='mathjax-inline'>\(u_2(t)\)</span> are chosen so
+that the forced equation and its auxiliary constraint are both satisfied. This converts a nonconstant forcing term
+into first-order equations for <span class='mathjax-inline'>\(u_1\)</span> and <span class='mathjax-inline'>\(u_2\)</span> <span class='cite'> [?]</span>. Alternatively, (ii) Laplace transforms, which convert the ODE to an
+algebraic equation <span class='mathjax-inline'>\(\mathcal {L}\{\vC \}(s) = \mathcal {L}\{V(t)\}(s) \cdot H(s)\)</span>, where <span class='mathjax-inline'>\(H(s) = 1/(LCs^2 + RCs + 1)\)</span> is the circuit transfer function, followed by a partial-fraction expansion and inverse
+transform <span class='cite'> [?]</span>.
+<!-- l. 181 --></p><p class='indent'>  
+<a id='x1-41r3'></a>
+  Here <span class='mathjax-inline'>\(V_0\)</span> denotes the general initial capacitor voltage; the main case study in Table <a href='#nominal-component-values'>I<!-- tex4ht:ref: tab:nominal-values  --></a> uses <span class='mathjax-inline'>\(V_0 = 0\)</span>, consistent with the
+zero-charge initial condition in (<a href='#x1-20r7'>7<!-- tex4ht:ref: eq:rlc_ivp  --></a>). The complete solution is <span class='mathjax-inline'>\(\vC (t) = v_{C,h}(t) + \Vs \)</span>. Applying <span class='mathjax-inline'>\(\vC (0) = V_0\)</span> and <span class='mathjax-inline'>\(\dot {\vC }(0) = 0\)</span>: </p><div class='mathjax-env mathjax-align'>\begin{align} \vC (0) &amp;= A_1 + \Vs = V_0 \;\implies \; A_1 = V_0 - \Vs , \label {eq:ic1}\\ \dot {\vC }(0) &amp;= -\alpha A_1 + \omega _d A_2 = 0 \;\implies \; A_2 = \frac {\alpha (V_0 - \Vs )}{\omega _d}. \label {eq:ic2} \end{align}</div><p><a id='x1-42r16'></a>
+<!-- l. 192 --></p><p class='indent'>  Substituting these coefficient equations into (<a href='#x1-38r14'>14<!-- tex4ht:ref: eq:under  --></a>) and adding <span class='mathjax-inline'>\(\Vs \)</span> gives the complete analytic underdamped step
+response: </p><div class='mathjax-env mathjax-equation'>\begin{equation} \vC (t) = \Vs + (V_0 - \Vs )e^{-\alpha t}\left ( \cos \omega _d t + \frac {\alpha }{\omega _d}\sin \omega _d t\right ). \label {eq:underdamped_final} \end{equation}</div><p><a id='x1-43r17'></a> For the typical step-response case <span class='mathjax-inline'>\(V_0 = 0\)</span>, this simplifies to <span class='mathjax-inline'>\(\vC (t) = \Vs \left [1 - e^{-\alpha t}\left (\cos \omega _d t + \frac {\alpha }{\omega _d}\sin \omega _d t\right )\right ]\)</span>.
+<!-- l. 202 --></p><p class='indent'>  For completeness, the initial conditions <span class='mathjax-inline'>\(\vC (0) = 0\)</span> and <span class='mathjax-inline'>\(\dot {\vC }(0) = 0\)</span> are applied to the remaining two cases. For the critically damped
+case, the complete solution is <span class='mathjax-inline'>\(\vC (t) = v_{C,h}(t) + \Vs \)</span> with <span class='mathjax-inline'>\(v_{C,h}(t) = (A_1 + A_2 t)\,e^{-\alpha t}\)</span>. Applying the initial conditions: </p><div class='mathjax-env mathjax-align'>\begin{align} \vC (0) &amp;= A_1 + \Vs = 0 \;\implies \; A_1 = -\Vs , \label {eq:crit_ic1}\\ \dot {\vC }(0) &amp;= -\alpha A_1 + A_2 = 0 \;\implies \; A_2 = -\alpha \Vs , \label {eq:crit_ic2} \end{align}</div><p><a id='x1-44r18'></a>
+<!-- l. 213 --></p><p class='indent'>  giving the complete critically damped step response: </p><div class='mathjax-env mathjax-equation'>\begin{equation} \vC (t) = \Vs \left [1 - (1 + \alpha t)\,e^{-\alpha t}\right ]. \label {eq:crit_final} \end{equation}</div><p><a id='x1-45r19'></a>
+<!-- l. 219 --></p><p class='indent'>  For the overdamped case, <span class='mathjax-inline'>\(v_{C,h}(t) = A_1 e^{r_1 t} + A_2 e^{r_2 t}\)</span>. Applying the initial conditions: </p><div class='mathjax-env mathjax-align'>\begin{align} \vC (0) &amp;= A_1 + A_2 + \Vs = 0 \;\implies \; A_1 + A_2 = -\Vs , \label {eq:over_ic1}\\ \dot {\vC }(0) &amp;= r_1 A_1 + r_2 A_2 = 0, \label {eq:over_ic2} \end{align}</div><p><a id='x1-46r20'></a>
+<!-- l. 228 --></p><p class='indent'>  and solving this <span class='mathjax-inline'>\(2\times 2\)</span> system: </p><div class='mathjax-env mathjax-equation'>\begin{equation} A_1 = -\Vs \,\frac {r_2}{r_2 - r_1}, \qquad A_2 = \Vs \,\frac {r_1}{r_2 - r_1}, \label {eq:over_coeffs} \end{equation}</div><p><a id='x1-47r21'></a> giving the complete overdamped step response: </p><div class='mathjax-env mathjax-equation'>\begin{equation} \vC (t) = \Vs \left [1 - \frac {r_2\,e^{r_1 t} - r_1\,e^{r_2 t}}{r_2 - r_1}\right ]. \label {eq:over_final} \end{equation}</div><p><a id='x1-48r22'></a>
+<a id='x1-49r4'></a>
+<!-- l. 1 --></p><p class='noindent' id='ivcsecondorder-rlc-response'>IV.  RESULTS
+<a id='Q1-1-1'></a>
+</p><!-- l. 4 --><p class='indent' id='ivcsecondorder-rlc-response'>  
+<a id='x1-50r1'></a>
+  A.  First-Order RC Response
+<a id='Q1-1-1'></a>
+</p><!-- l. 7 --><p class='indent'>  For the RC sub-circuit, the governing equation can be written as </p><div class='mathjax-env mathjax-equation'>\begin{equation} \dot {\vC } = \frac {\Vs - \vC }{RC}. \label {eq:rc_phase} \end{equation}</div><p><a id='x1-51r23'></a> The equilibrium is <span class='mathjax-inline'>\(\vC ^\ast =\Vs =10\,\mathrm {V}\)</span>. If <span class='mathjax-inline'>\(\vC &lt;\Vs \)</span>, then <span class='mathjax-inline'>\(\dot {\vC }&gt;0\)</span>; if <span class='mathjax-inline'>\(\vC &gt;\Vs \)</span>,
+then <span class='mathjax-inline'>\(\dot {\vC }&lt;0\)</span>. Thus the phase line points toward <span class='mathjax-inline'>\(\vC ^\ast \)</span> from both sides, so the equilibrium is asymptotically
+stable.
+<!-- l. 17 --></p><p class='indent'>  Using <span class='mathjax-inline'>\(R=100\,\Omega \)</span> and <span class='mathjax-inline'>\(C=10\,\mu \mathrm {F}\)</span> (a separate RC sub-circuit example, independent of the RLC values in Table <a href='#nominal-component-values'>I<!-- tex4ht:ref: tab:nominal-values  --></a>) gives <span class='mathjax-inline'>\(\tau _{RC}=RC=1\,\mathrm {ms}\)</span>. For three
+initial capacitor voltages, </p><div class='mathjax-env mathjax-align'>\begin{align} \vC (t;V_0=0) &amp;= 10\left (1-e^{-1000t}\right ), \label {eq:rc_v0_0}\\ \vC (t;V_0=5) &amp;= 10 - 5e^{-1000t}, \label {eq:rc_v0_5}\\ \vC (t;V_0=10) &amp;= 10. \label {eq:rc_v0_10} \end{align}</div><p><a id='x1-52r24'></a>
+<!-- l. 26 --></p><p class='indent'>  All three cases approach the same stable equilibrium, but they start from different points on the phase
+line.
+</p><!-- l. 29 --><p class='indent'>  With <span class='mathjax-inline'>\(V_0=0\)</span> fixed and <span class='mathjax-inline'>\(C=10\,\mu \mathrm {F}\)</span>, varying resistance changes only the time constant: </p><div class='mathjax-env mathjax-align'>\begin{align} R=50\,\Omega : \quad \vC (t) &amp;= 10\left (1-e^{-2000t}\right ), \label {eq:rc_r_50}\\ R=100\,\Omega : \quad \vC (t) &amp;= 10\left (1-e^{-1000t}\right ), \label {eq:rc_r_100}\\ R=200\,\Omega : \quad \vC (t) &amp;= 10\left (1-e^{-500t}\right ). \label {eq:rc_r_200} \end{align}</div><p><a id='x1-53r25'></a>
+<!-- l. 39 --></p><p class='indent'>  Larger resistance produces slower charging, which is the first-order analog of the damping effect studied in the
+full RLC circuit.
+</p><!-- l. 42 --><p class='indent' id='ivcsecondorder-rlc-response'>  
+<a id='x1-54r2'></a>
+  B.  First-Order RL Response
+                                                                                                  
+                                                                                                  
+<a id='Q1-1-1'></a>
+</p><!-- l. 45 --><p class='indent'>  For the RL sub-circuit, the analytic solution (<a href='#x1-30r9'>9<!-- tex4ht:ref: eq:rl_sol  --></a>) can similarly be evaluated for three values of resistance with <span class='mathjax-inline'>\(L = 0.1\,\mathrm {H}\)</span>
+and <span class='mathjax-inline'>\(\Vs = 10\,\mathrm {V}\)</span>: </p><div class='mathjax-env mathjax-align'>\begin{align} R=50\,\Omega : \quad i(t) &amp;= 0.2\left (1 - e^{-500t}\right )\;\mathrm {A}, \label {eq:rl_r_50}\\ R=100\,\Omega : \quad i(t) &amp;= 0.1\left (1 - e^{-1000t}\right )\;\mathrm {A}, \label {eq:rl_r_100}\\ R=200\,\Omega : \quad i(t) &amp;= 0.05\left (1 - e^{-2000t}\right )\;\mathrm {A}. \label {eq:rl_r_200} \end{align}</div><p><a id='x1-55r26'></a>
+<!-- l. 56 --></p><p class='indent'>  Larger resistance both reduces the steady-state current <span class='mathjax-inline'>\(\Vs /R\)</span> and increases the rate of rise (since <span class='mathjax-inline'>\(\tau _{RL} = L/R\)</span> decreases), the
+inverse of the RC behavior where larger <span class='mathjax-inline'>\(R\)</span> slows the response.
+</p><!-- l. 60 --><p class='indent' id='ivcsecondorder-rlc-response'>  
+<a id='x1-56r3'></a>
+  C.  Second-Order RLC Response
+<a id='Q1-1-1'></a>
+</p><!-- l. 63 --><p class='indent'>  For the selected component values, </p><div class='mathjax-env mathjax-equation'>\begin{equation} \omega _0 = 1000\,\mathrm {rad/s}, \qquad \Rcrit = 200\,\Omega . \label {eq:numerical_omega_rcrit} \end{equation}</div><p><a id='x1-57r27'></a> The three resistance values in Table <a href='#damping-cases-for-the-series-rlc-step-response'>II<!-- tex4ht:ref: tab:damping-cases  --></a> therefore sample
+the underdamped, critically damped, and overdamped regimes without changing <span class='mathjax-inline'>\(L\)</span>, <span class='mathjax-inline'>\(C\)</span>, or the source
+voltage.
+                                                                                                  
+                                                                                                  
+<!-- l. 73 --></p><p class='indent'>  </p><hr class='float' /><div class='float' id='damping-cases-for-the-series-rlc-step-response'>
+                                                                                                  
+                                                                                                  
+<a id='x1-58r2'></a>
+TABLE II<br />
+DAMPING CASES FOR THE SERIES RLC STEP RESPONSE
+<div class='tabular'>
+ <table class='tabular' id='TBL-2'><colgroup id='TBL-2-1g'><col id='TBL-2-1' /><col id='TBL-2-2' /><col id='TBL-2-3' /><col id='TBL-2-4' /></colgroup><tr id='TBL-2-1-' style='vertical-align:baseline;'><td class='td01' id='TBL-2-1-1' style='white-space:normal; text-align:left;'>Case                      </td><td class='td11' id='TBL-2-1-2' style='white-space:normal; text-align:left;'> <span class='mathjax-inline'>\(R\)</span> </td><td class='td11' id='TBL-2-1-3' style='white-space:normal; text-align:left;'> <span class='mathjax-inline'>\(\alpha \)</span> </td><td class='td10' id='TBL-2-1-4' style='white-space:normal; text-align:left;'> Characteristic data</td>
+</tr><tr id='TBL-2-2-' style='vertical-align:baseline;'><td class='td01' id='TBL-2-2-1' style='white-space:normal; text-align:left;'>Underdamped         </td><td class='td11' id='TBL-2-2-2' style='white-space:normal; text-align:left;'> <span class='mathjax-inline'>\(50\,\Omega \)</span> </td><td class='td11' id='TBL-2-2-3' style='white-space:normal; text-align:left;'> <span class='mathjax-inline'>\(250\,\mathrm {s}^{-1}\)</span> </td><td class='td10' id='TBL-2-2-4' style='white-space:normal; text-align:left;'> <span class='mathjax-inline'>\(\omega _d = 968.25\,\mathrm {rad/s}\)</span>             </td>
+</tr><tr id='TBL-2-3-' style='vertical-align:baseline;'><td class='td01' id='TBL-2-3-1' style='white-space:normal; text-align:left;'>Critically damped  </td><td class='td11' id='TBL-2-3-2' style='white-space:normal; text-align:left;'> <span class='mathjax-inline'>\(200\,\Omega \)</span> </td><td class='td11' id='TBL-2-3-3' style='white-space:normal; text-align:left;'> <span class='mathjax-inline'>\(1000\,\mathrm {s}^{-1}\)</span> </td><td class='td10' id='TBL-2-3-4' style='white-space:normal; text-align:left;'> <span class='mathjax-inline'>\(r = -1000\,\mathrm {s}^{-1}\)</span>             </td>
+</tr><tr id='TBL-2-4-' style='vertical-align:baseline;'><td class='td01' id='TBL-2-4-1' style='white-space:normal; text-align:left;'>Overdamped           </td><td class='td11' id='TBL-2-4-2' style='white-space:normal; text-align:left;'> <span class='mathjax-inline'>\(500\,\Omega \)</span> </td><td class='td11' id='TBL-2-4-3' style='white-space:normal; text-align:left;'> <span class='mathjax-inline'>\(2500\,\mathrm {s}^{-1}\)</span> </td><td class='td10' id='TBL-2-4-4' style='white-space:normal; text-align:left;'> <span class='mathjax-inline'>\(r_1 = -208.71\,\mathrm {s}^{-1}\)</span>, <span class='mathjax-inline'>\(r_2 = -4791.29\,\mathrm {s}^{-1}\)</span>                            </td>
+
+</tr></table>                                                                              </div>
+                                                                                                  
+                                                                                                  
+  </div><hr class='endfloat' />
+<!-- l. 92 --><p class='indent'>  With <span class='mathjax-inline'>\(\vC (0)=0\)</span>, <span class='mathjax-inline'>\(\dot {\vC }(0)=0\)</span>, and <span class='mathjax-inline'>\(\Vs =10\,\mathrm {V}\)</span>, the numerical step responses are as follows, with <span class='mathjax-inline'>\(t\)</span> measured in seconds and <span class='mathjax-inline'>\(\vC \)</span> measured in volts:
+</p><div class='mathjax-env mathjax-align'>\begin{align} v_{C,50}(t) &amp;= 10\!\left [ 1 - e^{-250t}\!\left (\cos (968.25t) + 0.2582\sin (968.25t)\right )\right ], \label {eq:under_numeric}\\ v_{C,200}(t) &amp;= 10\!\left [1 - (1 + 1000t)e^{-1000t}\right ], \label {eq:crit_numeric}\\ v_{C,500}(t) &amp;= 10 - 10.456e^{-208.71t} + 0.456e^{-4791.29t}. \label {eq:over_numeric} \end{align}</div><p><a id='x1-59r28'></a>
+<!-- l. 108 --></p><p class='indent'>  The underdamped expression oscillates around the final value before settling, the critically damped expression
+reaches the final value as quickly as possible without oscillation, and the overdamped expression approaches the
+final value without overshoot but is slowed by the dominant pole <span class='mathjax-inline'>\(r_1 = -208.71\,\mathrm {s}^{-1}\)</span>.
+</p><!-- l. 114 --><p class='indent'>  The phase trajectory in Fig. <a href='#phase-trajectory-of-the-secondorder-system-vc-vs-vc-for-the-underdamped-case-with-r-converging-to-the-equilibrium-vc-vc-v-vs'>2<!-- tex4ht:ref: fig:phase  --></a> uses the state coordinates <span class='mathjax-inline'>\((\vC ,\dot {\vC })\)</span>. In these coordinates the step response equilibrium is
+<span class='mathjax-inline'>\((\Vs ,0)=(10\,\mathrm {V},0\,\mathrm {V/s})\)</span>, not the origin. Equivalently, </p><div class='mathjax-env mathjax-equation'>\begin{equation} \dot {x}_1 = x_2, \qquad \dot {x}_2 = \frac {\Vs - x_1 - RCx_2}{LC}, \quad x_1=\vC ,\;x_2=\dot {\vC }. \label {eq:state_phase} \end{equation}</div><p><a id='x1-60r29'></a> For the underdamped case <span class='mathjax-inline'>\(R=50\,\Omega \)</span>, the eigenvalues are <span class='mathjax-inline'>\(-250 \pm j\,968.25\)</span>, so the trajectory is a stable spiral
+approaching <span class='mathjax-inline'>\((10,0)\)</span> <span class='cite'> [?]</span>. If the shifted coordinate <span class='mathjax-inline'>\(u=\vC -\Vs \)</span> were used instead, the same spiral would approach
+<span class='mathjax-inline'>\((u,\dot {u})=(0,0)\)</span>.
+  </p><hr class='figure' /><div class='figure'>
+                                                                                                  
+                                                                                                  
+                                                                                                  
+                                                                                                  
+<!-- l. 131 --><p class='noindent' id='capacitor-voltage-vct-for-three-values-of-resistance-r-showing-underdamped-critically-damped-and-overdamped-responses'><img alt='[Picture]' src='index0x.svg' />
+<a id='x1-61r1'></a>
+Fig. 1.  Capacitor voltage <span class='mathjax-inline'>\(\vC (t)\)</span> for three values of resistance <span class='mathjax-inline'>\(R\)</span>, showing underdamped, critically damped, and overdamped responses.
+                                                                                                  
+                                                                                                  
+</p>
+  </div><hr class='endfigure' />
+  <hr class='figure' /><div class='figure'>
+                                                                                                  
+                                                                                                  
+                                                                                                  
+                                                                                                  
+<!-- l. 163 --><p class='noindent' id='phase-trajectory-of-the-secondorder-system-vc-vs-vc-for-the-underdamped-case-with-r-converging-to-the-equilibrium-vc-vc-v-vs'><img alt='[Picture]' src='index1x.svg' />
+<a id='x1-62r2'></a>
+Fig. 2.  Phase trajectory of the second-order system (<span class='mathjax-inline'>\(\dot {\vC }\)</span> vs. <span class='mathjax-inline'>\(\vC \)</span>) for the underdamped case with <span class='mathjax-inline'>\(R = 50\,\Omega \)</span>, converging to the equilibrium <span class='mathjax-inline'>\((\vC ,\,\dot {\vC }) = (10\,\text {V},\;0\,\text {V/s})\)</span>.
+                                                                                                  
+                                                                                                  
+</p>
+  </div><hr class='endfigure' />
+<!-- l. 182 --><p class='indent' id='vanonlinear-modeling-and-statespace-representation'>  
+<a id='x1-63r4'></a>
+  D.  Connection to the Research Question
+<a id='Q1-1-4'></a>
+</p><!-- l. 184 --><p class='indent'>  The results show that changing <span class='mathjax-inline'>\(R\)</span> changes the characteristic roots while leaving the energy-storage parameters <span class='mathjax-inline'>\(L\)</span>
+and <span class='mathjax-inline'>\(C\)</span> fixed. For <span class='mathjax-inline'>\(R=50\,\Omega \)</span>, the roots are complex and the capacitor voltage rings before settling. For <span class='mathjax-inline'>\(R=200\,\Omega \)</span>, the repeated real root
+gives the fastest non-oscillatory response. For <span class='mathjax-inline'>\(R=500\,\Omega \)</span>, two negative real roots remove oscillation but slow the
+return to equilibrium. Thus resistance directly controls the damping mechanism described in the
+research question. This ideal-response baseline is the reference point for the non-ideal simulations in
+Section <a href='#x1-64r5'>V<!-- tex4ht:ref: sec:nonideal  --></a>.
+<a id='x1-64r5'></a>
+</p><!-- l. 1 --><p class='noindent' id='vanonlinear-modeling-and-statespace-representation'>V.  NUMERICAL SIMULATION OF NON-IDEAL COMPONENTS
+<a id='Q1-1-4'></a>
+</p><!-- l. 4 --><p class='indent' id='vanonlinear-modeling-and-statespace-representation'>  
+<a id='x1-65r1'></a>
+  A.  Nonlinear Modeling and State-Space Representation
+<a id='Q1-1-4'></a>
+</p><!-- l. 6 --><p class='indent'>  The analytic solutions derived in the previous sections rely on ideal, constant component values. In
+practical circuits, however, passive components can change behavior under high-stress transient
+conditions. To test how these material limits alter the ideal mathematical model, this section adds two
+phenomenological nonlinear effects: current-dependent heating in the resistor and magnetic saturation in the
+inductor.
+</p><!-- l. 14 --><p class='indent'>  Joule heating causes a resistor’s temperature, and therefore its effective resistance, to increase as current flows
+through it. We model this dynamic resistance as </p><div class='mathjax-env mathjax-equation'>\begin{equation} R(i) = R_0 + k i^2, \label {eq:thermal_resistance} \end{equation}</div><p><a id='x1-66r30'></a> where <span class='mathjax-inline'>\(R_0\)</span> is the nominal resistance and <span class='mathjax-inline'>\(k\)</span> is a heating coefficient.
+Dimensionally, <span class='mathjax-inline'>\([k][i^2] = \Omega \)</span> requires <span class='mathjax-inline'>\([k] = \Omega /\mathrm {A}^2\)</span>; that is, <span class='mathjax-inline'>\(k\)</span> carries units of <span class='mathjax-inline'>\(\Omega /\mathrm {A}^2\)</span>. Similarly, an inductor with a saturating magnetic core loses
+effective inductance at high current. This effect is approximated by </p><div class='mathjax-env mathjax-equation'>\begin{equation} L(i) = \frac {L_0}{1 + (i/I_{\mathrm {sat}})^2}, \label {eq:saturating_inductance} \end{equation}</div><p><a id='x1-67r31'></a> where <span class='mathjax-inline'>\(L_0\)</span> is the nominal inductance and <span class='mathjax-inline'>\(I_{\mathrm {sat}}\)</span> is the
+saturation current threshold <span class='cite'> [?]</span>.
+<!-- l. 34 --></p><p class='indent'>  Substituting these dynamic parameters into Kirchhoff’s Voltage Law gives the effective nonlinear model </p><div class='mathjax-env mathjax-equation'>\begin{equation} L(i)C\frac {d^2\vC }{dt^2} + R(i)C\frac {d\vC }{dt} + \vC = V(t), \label {eq:nonlinear_rlc} \end{equation}</div><p><a id='x1-68r32'></a> with
+series current <span class='mathjax-inline'>\(i(t)=C\,d\vC /dt\)</span>. Because the resistive term now contains a cubic dependence on <span class='mathjax-inline'>\(d\vC /dt\)</span> and the inductive term changes
+with current, the characteristic equation method used for constant-coefficient systems no longer applies. The
+functional forms chosen for <span class='mathjax-inline'>\(R(i)\)</span> and <span class='mathjax-inline'>\(L(i)\)</span> are phenomenological: they illustrate how state-dependent component behavior
+can affect the transient response, without claiming to represent a specific commercial device in
+detail.
+<!-- l. 49 --></p><p class='indent'>  For numerical simulation, let <span class='mathjax-inline'>\(y_1=\vC \)</span> and <span class='mathjax-inline'>\(y_2=d\vC /dt\)</span>. Then <span class='mathjax-inline'>\(i=C y_2\)</span>, and (<a href='#x1-68r32'>32<!-- tex4ht:ref: eq:nonlinear_rlc  --></a>) becomes the first-order state-space system
+</p><div class='mathjax-env mathjax-align'>\begin{align} \frac {dy_1}{dt} &amp;= y_2, \label {eq:nonideal_state_1}\\ \frac {dy_2}{dt} &amp;= \frac {V(t)-y_1-R(Cy_2)Cy_2}{L(Cy_2)C}. \label {eq:nonideal_state_2} \end{align}</div><p><a id='x1-69r33'></a>
+<!-- l. 58 --></p><p class='indent'>  The  system  was  integrated  in  Python  using  an  adaptive  RK45  method <span class='cite'> [?]</span>  with  <span class='mathjax-inline'>\(R_0=50\,\Omega \)</span>,  <span class='mathjax-inline'>\(L_0=0.1\,\mathrm {H}\)</span>,  <span class='mathjax-inline'>\(C=10\,\mu \mathrm {F}\)</span>,  <span class='mathjax-inline'>\(k=8000\,\Omega /\mathrm {A}^2\)</span>,  and  <span class='mathjax-inline'>\(I_{\mathrm {sat}}=0.05\,\mathrm {A}\)</span>.
+These values are not meant to identify a specific commercial component; instead, they isolate how
+stress-dependent component behavior changes the same baseline RLC circuit studied analytically
+above.
+</p>
+  <hr class='figure' /><div class='figure'>
+                                                                                                  
+                                                                                                  
+                                                                                                  
+                                                                                                  
+<!-- l. 68 --><p class='noindent' id='numerical-step-responses-of-the-rlc-circuit-under-nonideal-material-constraints-compared-against-the-ideal-baseline-model-r-l-h-c-f'><img alt='PIC' height='516' src='figures/nonideal_rlc_simulation.png' width='516' /> <a id='x1-70r3'></a>
+Fig. 3.  Numerical step responses of the RLC circuit under non-ideal material constraints compared against the ideal baseline model (<span class='mathjax-inline'>\(R_0=50\,\Omega \)</span>, <span class='mathjax-inline'>\(L_0=0.1\,\mathrm {H}\)</span>, <span class='mathjax-inline'>\(C=10\,\mu \mathrm {F}\)</span>).
+                                                                                                  
+                                                                                                  
+</p>
+  </div><hr class='endfigure' />
+<!-- l. 76 --><p class='indent' id='viiconclusion'>  
+<a id='x1-71r2'></a>
+  B.  Simulation Results and Physical Interpretation
+<a id='Q1-1-5'></a>
+</p><!-- l. 78 --><p class='indent'>  The numerical simulations in Fig. <a href='#numerical-step-responses-of-the-rlc-circuit-under-nonideal-material-constraints-compared-against-the-ideal-baseline-model-r-l-h-c-f'>3<!-- tex4ht:ref: fig:nonideal_simulation  --></a> show that the ideal step response remains a useful baseline, but it does
+not capture all of the transient behavior produced by stressed real components. Three non-ideal scenarios are
+examined: thermal resistance, inductor saturation, and resonant AC forcing.
+</p><!-- l. 84 --><p class='indent'>  
+<a id='x1-72r1'></a>
+  During the initial transient interval, the initially uncharged capacitor draws a large inrush current. In the
+thermal model, this current surge raises the effective resistance above the nominal <span class='mathjax-inline'>\(50\,\Omega \)</span> value exactly
+when the circuit has the most stored transient energy. The resistor therefore acts like a dynamic
+brake: it dissipates energy more aggressively during the first swing, suppressing the overshoot from
+about <span class='mathjax-inline'>\(14.44\,\mathrm {V}\)</span> in the ideal model to about <span class='mathjax-inline'>\(13.07\,\mathrm {V}\)</span> and bringing the response back toward the <span class='mathjax-inline'>\(10\,\mathrm {V}\)</span> steady state more
+quickly.
+</p><!-- l. 97 --><p class='indent'>  
+<a id='x1-73r2'></a>
+  When inductor saturation is introduced, the response also deviates from the ideal baseline, but for a different
+reason. The high initial current lowers the effective inductance in (<a href='#x1-67r31'>31<!-- tex4ht:ref: eq:saturating_inductance  --></a>); since <span class='mathjax-inline'>\(\omega _0=1/\sqrt {LC}\)</span>, the instantaneous natural
+frequency increases while the inductor is saturated. The voltage peak therefore occurs earlier than in the ideal
+model, and the first overshoot is reduced to about <span class='mathjax-inline'>\(13.24\,\mathrm {V}\)</span>. As the transient current decays, <span class='mathjax-inline'>\(L(i)\)</span> returns toward <span class='mathjax-inline'>\(L_0\)</span>, so the
+response gradually realigns with the ideal curve.
+</p><!-- l. 110 --><p class='indent'>  
+<a id='x1-74r3'></a>
+  To demonstrate energy buildup, the step input was replaced with an AC source </p><div class='mathjax-env mathjax-equation'>\begin{equation} V(t) = \Vs \sin (\omega _0 t), \label {eq:resonant_ac_input} \end{equation}</div><p><a id='x1-75r34'></a> driven at the ideal natural
+frequency <span class='mathjax-inline'>\(\omega _0=1000\,\mathrm {rad/s}\)</span>. Because the driving frequency matches the circuit’s natural energy exchange between <span class='mathjax-inline'>\(L\)</span> and <span class='mathjax-inline'>\(C\)</span>, the
+capacitor voltage grows far beyond the source amplitude before settling into a large oscillation. In
+this simulation, the capacitor voltage approaches nearly <span class='mathjax-inline'>\(\pm 20\,\mathrm {V}\)</span> even though the source amplitude is only
+<span class='mathjax-inline'>\(10\,\mathrm {V}\)</span>.
+<!-- l. 124 --></p><p class='indent'>  These simulations refine the research question. An ideal resistor determines the broad damping regime, but
+real-world component nonlinearities make damping state-dependent: the resistor, inductor, and input waveform
+can all change the transient path taken toward stability.
+<a id='x1-76r6'></a>
+</p><!-- l. 1 --><p class='noindent' id='viiconclusion'>VI.  DISCUSSION
+<a id='Q1-1-5'></a>
+</p><!-- l. 4 --><p class='indent' id='viiconclusion'>  
+<a id='x1-77r1'></a>
+  A.  Summary of Problem and Results
+<a id='Q1-1-5'></a>
+</p><!-- l. 6 --><p class='indent'>  This paper modeled series RLC circuits using first- and second-order ODEs, deriving analytic solutions for
+RC, RL, and RLC configurations. The resistor was identified as the sole energy-dissipating element, and its value
+shown to directly determine the discriminant of the characteristic equation (<a href='#x1-32r10'>10<!-- tex4ht:ref: eq:char  --></a>), thereby controlling whether the
+circuit is overdamped, critically damped, or underdamped. The numerical extension then showed that
+stress-dependent components can change the transient path even when the nominal values remain
+fixed.
+</p><!-- l. 15 --><p class='indent' id='viiconclusion'>  
+                                                                                                  
+                                                                                                  
+<a id='x1-78r2'></a>
+  B.  Interpretation in Terms of the Research Question
+<a id='Q1-1-5'></a>
+</p><!-- l. 17 --><p class='indent'>  Without resistance (<span class='mathjax-inline'>\(R = 0\)</span>), the characteristic roots are purely imaginary (<span class='mathjax-inline'>\(r = \pm j\omega _0\)</span>), yielding perpetual, undamped oscillations
+in an ideal LC tank circuit. Any nonzero <span class='mathjax-inline'>\(R\)</span> introduces the decay envelope <span class='mathjax-inline'>\(e^{-\alpha t}\)</span> that eventually damps oscillations to
+zero. In engineering applications: bandpass filters rely on controlled underdamping <span class='cite'> [?]</span> to achieve frequency
+selectivity when the output is taken across the resistor, while the capacitor-voltage response studied here behaves
+like a low-pass response with possible resonant overshoot. Overdamped circuits ensure no oscillatory transients
+(ringing) in power supplies and ADC front-ends <span class='cite'> [?]</span>; critically damped designs appear in servo systems where
+settling speed is paramount. A passive RLC circuit can store and exchange energy, but a sustained oscillator also
+requires an active energy source or feedback element to replace resistive losses. This analytical framework
+directly addresses the research question: resistors are essential for stabilizing oscillatory behavior and enabling
+practical circuit design. The non-ideal simulations add an important refinement: damping is not always a
+constant design parameter during a transient. When current is large, resistor heating can increase
+dissipation and suppress overshoot, while inductor saturation can temporarily raise the natural frequency
+and shift the timing of voltage peaks. The resonant AC case also shows that even with resistance
+present, a matched driving frequency can produce capacitor voltages much larger than the source
+amplitude.
+</p><!-- l. 42 --><p class='indent' id='viiconclusion'>  
+<a id='x1-79r3'></a>
+  C.  Limitations and Future Work
+<a id='Q1-1-5'></a>
+</p><!-- l. 44 --><p class='indent'>  The lumped-element and linearity assumptions restrict the model’s validity to low frequencies and small
+signals. Future work should incorporate: (i) calibration of <span class='mathjax-inline'>\(k\)</span> and <span class='mathjax-inline'>\(I_{\mathrm {sat}}\)</span> against measured component data; (ii) a
+temperature state equation for resistor self-heating rather than the instantaneous approximation <span class='mathjax-inline'>\(R(i)=R_0+ki^2\)</span>; (iii)
+distributed-element analysis for RF applications above <span class='mathjax-inline'>\(1\,\mathrm {MHz}\)</span>; (iv) experimental validation using an oscilloscope to
+compare measured <span class='mathjax-inline'>\(\vC (t)\)</span> waveforms against the analytic solutions derived here; and (v) extension to parallel RLC and
+more complex multi-mesh circuits modeled by systems of ODEs.
+<a id='x1-80r7'></a>
+</p><!-- l. 1 --><p class='noindent' id='viiconclusion'>VII.  CONCLUSION
+<a id='Q1-1-5'></a>
+</p><!-- l. 4 --><p class='indent'>  We derived and solved first- and second-order ODEs governing RC, RL, and series RLC circuits,
+demonstrating analytically and qualitatively how the resistor controls damping. The three damping
+regimes–overdamped, critically damped, and underdamped– correspond directly to engineering trade-offs between
+settling speed and oscillatory behavior. The numerical non-ideal simulations further show that real component
+behavior can change the shape and timing of the transient response: thermal resistance suppresses overshoot,
+inductor saturation shifts oscillation timing, and resonant forcing can amplify capacitor voltage beyond the
+source amplitude. The analysis shows that resistors are not merely optional loss elements but are
+indispensable for stable, predictable circuit operation, especially when component limits are included in the
+model.
+</p>
+   
+</body> 
+</html>
