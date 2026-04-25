@@ -1,7 +1,6 @@
 MAIN     := main
 BUILDDIR := build
 HTMLDIR  := docs
-HTMLBUILD := $(BUILDDIR)/html
 LATEXMK  := latexmk
 LATEX    := pdflatex
 PYTHON   := python3
@@ -26,9 +25,9 @@ $(HTMLDIR)/index.html: $(MAIN).tex $(wildcard content/*.tex) \
                         $(wildcard styles/*.sty) $(wildcard bibliography/*.bib) \
                         $(wildcard figures/*) styles/web.css \
                         scripts/postprocess_html.py $(BUILDDIR)/$(MAIN).pdf
-	mkdir -p $(HTMLDIR) $(HTMLBUILD) $(HTMLDIR)/figures
-	make4ht -d $(HTMLDIR) -B $(HTMLBUILD) -j index $(MAIN).tex "mathjax,NoFonts"
-	make4ht -d $(HTMLDIR) -B $(HTMLBUILD) -j index $(MAIN).tex "mathjax,NoFonts"
+	mkdir -p $(HTMLDIR) $(HTMLDIR)/figures
+	make4ht -d $(HTMLDIR) -j index $(MAIN).tex "mathjax,NoFonts"
+	make4ht -d $(HTMLDIR) -j index $(MAIN).tex "mathjax,NoFonts"
 	cp $(BUILDDIR)/$(MAIN).pdf $(HTMLDIR)/$(MAIN).pdf
 	cp figures/nonideal_rlc_simulation.svg $(HTMLDIR)/figures/nonideal_rlc_simulation.svg
 	cp styles/web.css $(HTMLDIR)/site.css

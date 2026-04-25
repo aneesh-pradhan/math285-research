@@ -45,6 +45,17 @@ build/
 *.ilg
 *.ind
 
+# TeX4ht artifacts generated at the repository root
+/index.4ct
+/index.4tc
+/index.css
+/index.dvi
+/index.html
+/index.idv
+/index.lg
+/index.xref
+/index*.svg
+
 # Matplotlib cache
 .mplrc
 
