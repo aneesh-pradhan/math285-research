@@ -1,9 +1,27 @@
+html {
+  background: #faf9f5;
+}
+
 body {
+  background: #faf9f5;
+  color: #141413;
   font-family: "Times New Roman", Times, serif;
   font-size: 18px;
   line-height: 1.55;
   max-width: 76ch;
   padding: 2.5rem 1.25rem;
+}
+
+a {
+  color: #8f3f22;
+}
+
+a:visited {
+  color: #6f5848;
+}
+
+.MathJax {
+  color: inherit;
 }
 
 .site-actions {
@@ -14,15 +32,16 @@ body {
 }
 
 .site-actions a {
-  border: 1px solid currentColor;
+  border: 1px solid #cfc8bc;
   border-radius: 999px;
+  color: #141413;
   padding: 0.35rem 0.75rem;
   text-decoration: none;
 }
 
 .site-actions a:hover {
-  background: CanvasText;
-  color: Canvas;
+  background: #141413;
+  color: #faf9f5;
 }
 
 img {
@@ -44,4 +63,37 @@ table {
 td,
 th {
   padding: 0.25rem 0.5rem;
+}
+
+@media (prefers-color-scheme: dark) {
+  html {
+    background: #141413;
+  }
+
+  body {
+    background: #141413;
+    color: #faf9f5;
+  }
+
+  a {
+    color: #e2a17e;
+  }
+
+  a:visited {
+    color: #c6b3a4;
+  }
+
+  .site-actions a {
+    border-color: #4a4943;
+    color: #faf9f5;
+  }
+
+  .site-actions a:hover {
+    background: #faf9f5;
+    color: #141413;
+  }
+
+  img[src^="index"][src$=".svg"] {
+    filter: invert(1) hue-rotate(180deg) saturate(0.8);
+  }
 }

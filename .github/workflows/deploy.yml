@@ -27,7 +27,6 @@ jobs:
           sudo apt-get install -y \
             latexmk \
             dvisvgm \
-            make4ht \
             texlive-bibtex-extra \
             texlive-extra-utils \
             texlive-fonts-extra \
@@ -37,6 +36,7 @@ jobs:
             texlive-pictures \
             texlive-publishers \
             texlive-science
+          make4ht --version
 
       - name: Build PDF and HTML site
         run: make html
