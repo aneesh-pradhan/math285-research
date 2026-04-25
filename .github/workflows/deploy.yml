@@ -21,32 +21,29 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Compile LaTeX to PDF
-        uses: xu-cheng/latex-action@v4
-        with:
-          root_file: main.tex
-
-      # TODO: If tex-to-html.sh requires tools like pandoc or make4ht,
-      # install them via apt-get before running the script, e.g.:
-      #   sudo apt-get update && sudo apt-get install -y pandoc make4ht
-      - name: Make conversion script executable
-        run: chmod +x tex-to-html.sh
-
-      - name: Run HTML conversion script
-        run: ./tex-to-html.sh
-
-      - name: Create public directory
-        run: mkdir public
-
-      - name: Move artifacts into public
+      - name: Install TeX build dependencies
         run: |
-          mv main.pdf public/
-          mv index.html public/
+          sudo apt-get update
+          sudo apt-get install -y \
+            latexmk \
+            dvisvgm \
+            texlive-bibtex-extra \
+            texlive-extra-utils \
+            texlive-fonts-extra \
+            texlive-fonts-recommended \
+            texlive-latex-extra \
+            texlive-latex-recommended \
+            texlive-pictures \
+            texlive-publishers \
+            texlive-science
+
+      - name: Build PDF and HTML site
+        run: make html
 
       - name: Upload Pages artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: public
+          path: docs
 
   deploy:
     needs: build
