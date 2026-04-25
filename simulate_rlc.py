@@ -13,10 +13,33 @@ matplotlib.use("Agg")
 import matplotlib.pyplot as plt
 from matplotlib.ticker import ScalarFormatter
 
+SVG_DARK_MODE_CSS = """
+@media (prefers-color-scheme: dark) {
+  *[style*="fill: #000000"] { fill: #e8e8e8 !important; }
+  *[style*="stroke: #000000"] { stroke: #e8e8e8 !important; }
+  *[style*="stroke: #bfbfbf"] { stroke: #555555 !important; }
+  *[style*="stroke: #cccccc"] { stroke: #777777 !important; }
+  *[style*="stroke: #0000ff"] { stroke: #6ea8ff !important; }
+  *[style*="stroke: #ff0000"] { stroke: #ff6b6b !important; }
+}
+"""
+
+
+def add_svg_dark_mode(svg_path):
+    svg = svg_path.read_text(encoding="utf-8")
+    svg = svg.replace(
+        "*{stroke-linejoin: round; stroke-linecap: butt}",
+        "*{stroke-linejoin: round; stroke-linecap: butt}" + SVG_DARK_MODE_CSS,
+        1,
+    )
+    svg_path.write_text(svg, encoding="utf-8")
+
+
 plt.rcParams.update({
     "text.usetex": True,
     "font.family": "serif",
     "font.serif": ["Times"],
+    "svg.fonttype": "none",
     "axes.formatter.use_mathtext": True,
     "axes.titlesize": 9,
     "axes.labelsize": 8,
@@ -94,10 +117,12 @@ for key in scenarios.keys():
 
 # --- 5. Plotting the 2x2 Grid ---
 fig, axs = plt.subplots(2, 2, figsize=(7.2, 5.0))
+fig.patch.set_alpha(0)
 fig.suptitle('Advanced RLC Circuit Modeling: Nonlinear and AC Dynamics')
 
 # Helper function to plot each subplot
 def format_subplot(ax, time, voltage, title, is_ac=False):
+    ax.set_facecolor('none')
     ax.plot(
         time,
         voltage,
@@ -116,7 +141,14 @@ def format_subplot(ax, time, voltage, title, is_ac=False):
             alpha=0.55,
             label='Ideal baseline',
         )
-        ax.legend(frameon=True, framealpha=0.9, borderpad=0.3, handlelength=1.8)
+        legend = ax.legend(
+            frameon=True,
+            framealpha=1.0,
+            borderpad=0.3,
+            handlelength=1.8,
+        )
+        legend.get_frame().set_facecolor('none')
+        legend.get_frame().set_edgecolor('0.65')
 
     if not is_ac:
         ax.axhline(Vs_amp, color='black', linewidth=0.6, linestyle=':')
@@ -148,6 +180,13 @@ plt.tight_layout(rect=[0, 0.02, 1, 0.94]) # Adjust layout so title fits
 
 output_dir = Path("figures")
 output_dir.mkdir(exist_ok=True)
+svg_path = output_dir / "nonideal_rlc_simulation.svg"
 fig.savefig(output_dir / "nonideal_rlc_simulation.pdf", bbox_inches="tight")
 fig.savefig(output_dir / "nonideal_rlc_simulation.png", dpi=200, bbox_inches="tight")
-print("Saved figures/nonideal_rlc_simulation.pdf and figures/nonideal_rlc_simulation.png")
+fig.savefig(svg_path, bbox_inches="tight", transparent=True)
+add_svg_dark_mode(svg_path)
+print(
+    "Saved figures/nonideal_rlc_simulation.pdf, "
+    "figures/nonideal_rlc_simulation.png, and "
+    "figures/nonideal_rlc_simulation.svg"
+)

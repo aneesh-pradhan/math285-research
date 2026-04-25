@@ -90,7 +90,10 @@ Execute the numerical simulation script:
 python3 simulate_rlc.py
 ```
 
-This generates figures in `figures/nonideal_rlc_simulation.pdf` and `figures/nonideal_rlc_simulation.png`, comparing ideal and non-ideal RLC responses.
+This generates figures in `figures/nonideal_rlc_simulation.pdf`,
+`figures/nonideal_rlc_simulation.png`, and
+`figures/nonideal_rlc_simulation.svg`, comparing ideal and non-ideal RLC
+responses.
 
 ### Word Count
 

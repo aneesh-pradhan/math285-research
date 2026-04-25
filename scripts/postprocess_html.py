@@ -65,6 +65,11 @@ def main() -> int:
     if 'class="site-actions"' not in html:
         html = html.replace("<body>", f"<body>\n{PDF_BAR}", 1)
 
+    html = html.replace(
+        "figures/nonideal_rlc_simulation.png",
+        "figures/nonideal_rlc_simulation.svg",
+    )
+
     html_path.write_text(html, encoding="utf-8")
     remove_unreferenced_tex4ht_svgs(html_path, html)
     return 0
