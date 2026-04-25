@@ -25,14 +25,14 @@ html: $(HTMLDIR)/index.html
 $(HTMLDIR)/index.html: $(MAIN).tex $(wildcard content/*.tex) \
                         $(wildcard styles/*.sty) $(wildcard bibliography/*.bib) \
                         $(wildcard figures/*) styles/web.css \
-                        bin/postprocess_html.py $(BUILDDIR)/$(MAIN).pdf
+                        scripts/postprocess_html.py $(BUILDDIR)/$(MAIN).pdf
 	mkdir -p $(HTMLDIR) $(HTMLBUILD)
 	make4ht -d $(HTMLDIR) -B $(HTMLBUILD) -j index $(MAIN).tex "mathjax,NoFonts"
 	make4ht -d $(HTMLDIR) -B $(HTMLBUILD) -j index $(MAIN).tex "mathjax,NoFonts"
 	cp $(BUILDDIR)/$(MAIN).pdf $(HTMLDIR)/$(MAIN).pdf
 	cp styles/web.css $(HTMLDIR)/site.css
 	touch $(HTMLDIR)/.nojekyll
-	$(PYTHON) bin/postprocess_html.py $(HTMLDIR)/index.html
+	$(PYTHON) scripts/postprocess_html.py $(HTMLDIR)/index.html
 
 .PHONY: open
 open: all
