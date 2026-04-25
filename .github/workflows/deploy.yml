@@ -27,6 +27,7 @@ jobs:
           sudo apt-get install -y \
             latexmk \
             dvisvgm \
+            make4ht \
             texlive-bibtex-extra \
             texlive-extra-utils \
             texlive-fonts-extra \
